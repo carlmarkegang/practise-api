@@ -1,0 +1,1 @@
+config.vm.synced_folder "user-data/sites/forum", "/var/www/forum", :owner => "www-data", :mount_options => [ "dmode=775", "fmode=774"]
