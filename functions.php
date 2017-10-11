@@ -51,23 +51,6 @@ class user
 class posts
 {
 
-    function getFrontpagePosts($type, $parent = null, $limit = 100)
-    {
-        $db = new db();
-        if ($type == "main") {
-            $query = "SELECT id,text FROM posts where type='main'";
-        } else if ($type == "sub") {
-            $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id desc limit $limit";
-        }
-
-        if ($result = $db->query($query)) {
-            while ($row = $result->fetch_assoc()) {
-                $results_array[] = $row;
-            }
-            return $results_array;
-        }
-    }
-
     function getPosts($type, $parent = null, $limit = 100, $id = null)
     {
         $db = new db();
