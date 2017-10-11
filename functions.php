@@ -43,7 +43,6 @@ class user
                 $results_array[] = $row;
             }
             return $results_array;
-            $result->close();
         }
     }
 }
@@ -66,7 +65,6 @@ class posts
                 $results_array[] = $row;
             }
             return $results_array;
-            $result->close();
         }
     }
 
