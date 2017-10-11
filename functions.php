@@ -7,24 +7,20 @@ require('config.php');
 class user
 {
 
-    function login($user, $pass)
+    function login($username, $password)
     {
         $db = new db();
         $date = new DateTime();
+        $user = new user();
         $token = password_hash($date->format('U'), PASSWORD_DEFAULT);
-        $update = "UPDATE users set token = '$token' where password='$pass' and username = '$user'";
+        $update = "UPDATE users set token = '$token' where password='$password' and username = '$username'";
         if ($db->query($update)) {
-            $query = "SELECT * FROM users where password='$pass' and username = '$user'";
-            if ($result = $db->query($query)) {
-                if ($result->num_rows === 0) {
-                    header('Location: index.php?action=login&message=1');
-                } else {
-                    while ($row = $result->fetch_row()) {
-                        setcookie('usertoken', $row[3], time() + (86400 * 30), "/"); // 86400 = 1 day
-                        $result->close();
-                        header('Location: index.php');
-                    }
-                }
+            $userDetails = $user->getUserDetails($token);
+            if ($userDetails != NULL) {
+                setcookie('usertoken', $userDetails[0]['token'], time() + (86400), "/");
+                header('Location: index.php');
+            } else {
+                header('Location: index.php?action=login&message=1');
             }
         }
         $db->close();
@@ -47,11 +43,7 @@ class user
                 $results_array[] = $row;
             }
             return $results_array;
+            $result->close();
         }
     }
 }
-
-#$user = new user();
-#$user->login('carl','pass');
-
-#sleep(5);
