@@ -77,7 +77,11 @@ class posts
         $date = date("y-m-d");
         $user = new user();
         $userDetails = $user->getUserDetails($token);
-        if ($parent==''){$type = 'main';} else {$type = 'sub';}
+        if ($parent == '') {
+            $type = 'main';
+        } else {
+            $type = 'sub';
+        }
 
         $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails[0]['id'] . "')";
         if ($db->query($insert) === TRUE) {

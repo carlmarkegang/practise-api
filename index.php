@@ -34,7 +34,7 @@ switch ($_GET["action"]) {
         $user->login($_POST['user'], $_POST['pass']);
         break;
     case "viewpost":
-        $mainPosts = $posts->getPosts('id',null,null, $_GET["id"]);
+        $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
         break;
     case "createpost":
         $mainPosts = $posts->createPost($_POST['text'], $userDetails[0]['token'], $_GET["id"]);
@@ -73,7 +73,7 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
     echo "<div><a href='index.php?action=viewpost&id=" . $mainPostsValue['id'] . "'><div class='mainposts'>" . $mainPostsValue['text'] . "</div></a>";
 
-    $subPosts = $posts->getPosts('sub', $mainPostsValue['id'],3);
+    $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 3);
     foreach ($subPosts as $subPostsKey => $subPostsValue) {
         echo "<div class='subposts'>" . $subPostsValue['text'] . "</div>";
     }
