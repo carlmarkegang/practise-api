@@ -47,3 +47,28 @@ class user
         }
     }
 }
+
+
+class posts
+{
+
+    function getPosts($type, $parent = null)
+    {
+        $db = new db();
+        if ($type == "main") {
+            $query = "SELECT id,text FROM posts where type='$type'";
+        } else if ($type == "sub") {
+            $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id desc limit 3";
+        }
+
+        if ($result = $db->query($query)) {
+            while ($row = $result->fetch_assoc()) {
+                $results_array[] = $row;
+            }
+            return $results_array;
+            $result->close();
+        }
+    }
+
+
+}

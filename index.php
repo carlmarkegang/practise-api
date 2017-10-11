@@ -1,9 +1,11 @@
 <?php
 require('functions.php');
 $user = new user();
+$posts = new posts();
 
 if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
     $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
+    $mainPosts = $posts->getPosts('main');
     echo '<h4><a href="index.php?action=logout">Logga ut</a></h4>';
 } else if (!$_GET["action"]) {
     header('Location: index.php?action=login');
@@ -39,9 +41,34 @@ switch ($_GET["action"]) {
 <html>
 <head>
     <title><?php echo $userDetails[0]['username'] ?></title>
+    <style>
+        .mainposts {
+            background-color: #e8e8e8;
+        }
+
+        .subposts {
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
 <h2>Hello <?php echo $userDetails[0]['username'] ?></h2>
+
+<?php
+
+foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
+
+    echo "<div><div class='mainposts'>" . $mainPostsValue['text'] . "</div>";
+
+    $subPosts = $posts->getPosts('sub', $mainPostsValue['id']);
+    foreach ($subPosts as $subPostsKey => $subPostsValue) {
+        echo "<div class='subposts'>" . $subPostsValue['text'] . "</div>";
+    }
+
+    echo "</div>";
+
+}
+?>
 
 </body>
 </html>
