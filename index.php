@@ -2,10 +2,10 @@
 require('functions.php');
 $user = new user();
 $posts = new posts();
+$postid = $_GET["id"] ? "&id=" . $_GET["id"] : "";
 
 if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
     $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
-    $mainPosts = $posts->getPosts('main');
     echo '<h4><a href="index.php?action=logout">Logga ut</a></h4>';
 } else if (!$_GET["action"]) {
     header('Location: index.php?action=login');
@@ -33,8 +33,15 @@ switch ($_GET["action"]) {
     case "loginreq":
         $user->login($_POST['user'], $_POST['pass']);
         break;
+    case "viewpost":
+        $mainPosts = $posts->getPosts('id',null,null, $_GET["id"]);
+        break;
+    case "createpost":
+        $mainPosts = $posts->createPost($_POST['text'], $userDetails[0]['token'], $_GET["id"]);
+        break;
     default:
-        #echo "Your favorite color is neither red, blue, nor green!";
+        $mainPosts = $posts->getPosts('main');
+        break;
 }
 ?>
 <!DOCTYPE html>
@@ -52,15 +59,21 @@ switch ($_GET["action"]) {
     </style>
 </head>
 <body>
+<h3><a href="index.php">Home</a></h3>
 <h2>Hello <?php echo $userDetails[0]['username'] ?></h2>
 
+<form action="index.php?action=createpost<?php echo $postid ?>" method="post">
+    text:<br>
+    <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
+    <input type="submit">
+</form>
 <?php
 
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
-    echo "<div><div class='mainposts'>" . $mainPostsValue['text'] . "</div>";
+    echo "<div><a href='index.php?action=viewpost&id=" . $mainPostsValue['id'] . "'><div class='mainposts'>" . $mainPostsValue['text'] . "</div></a>";
 
-    $subPosts = $posts->getPosts('sub', $mainPostsValue['id']);
+    $subPosts = $posts->getPosts('sub', $mainPostsValue['id'],3);
     foreach ($subPosts as $subPostsKey => $subPostsValue) {
         echo "<div class='subposts'>" . $subPostsValue['text'] . "</div>";
     }
