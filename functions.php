@@ -57,7 +57,7 @@ class posts
         if ($type == "main") {
             $query = "SELECT id,text FROM posts where type='main'";
         } else if ($type == "sub") {
-            $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id desc limit $limit";
+            $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id asc limit $limit";
         } else if ($type == "id") {
             $query = "SELECT id,text FROM posts where type='main' and id = $id";
         }

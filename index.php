@@ -38,6 +38,11 @@ switch ($_GET["action"]) {
         break;
     case "createpost":
         $mainPosts = $posts->createPost($_POST['text'], $userDetails[0]['token'], $_GET["id"]);
+        if (isset($_GET["id"])) {
+            header('Location: index.php?action=viewpost' . $postid);
+        } else {
+            header('Location: index.php');
+        }
         break;
     default:
         $mainPosts = $posts->getPosts('main');
