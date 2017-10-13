@@ -5,13 +5,11 @@ class User
 
     function login($username, $password)
     {
-        $db = new db();
         $user = new User();
         if ($userToken = $user->authenticateUser($username, $password)) {
             if ($newToken = $user->updateUserToken($userToken)) {
                 setcookie('usertoken', $newToken, time() + (86400), "/");
                 header('Location: index.php');
-                $db->close();
             }
         }
     }
