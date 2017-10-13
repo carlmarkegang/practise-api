@@ -1,5 +1,5 @@
 <?php
-require('functions.php');
+require 'functions.php';
 $user = new User();
 $posts = new Posts();
 $postid = $_GET["id"] ? "&id=" . $_GET["id"] : "";
@@ -12,11 +12,11 @@ if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
 }
 
 switch ($_GET["action"]) {
-    case "login":
-        if ($_GET["message"] == 1) {
-            echo "<strong>Invalid username or password</strong>";
-        }
-        echo '
+case "login":
+    if ($_GET["message"] == 1) {
+        echo "<strong>Invalid username or password</strong>";
+    }
+    echo '
         <form action="index.php?action=loginreq" method="post">
         Username:<br>
         <input type="text" name="user"><br>
@@ -25,28 +25,28 @@ switch ($_GET["action"]) {
         <input type="submit">
         </form>
         ';
-        break;
-    case "logout":
-        $user->logout();
+    break;
+case "logout":
+    $user->logout();
+    header('Location: index.php');
+    break;
+case "loginreq":
+    $user->login($_POST['user'], $_POST['pass']);
+    break;
+case "viewpost":
+    $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
+    break;
+case "createpost":
+    $mainPosts = $posts->createPost($_POST['text'], $userDetails[0]['token'], $_GET["id"]);
+    if (isset($_GET["id"])) {
+        header('Location: index.php?action=viewpost' . $postid);
+    } else {
         header('Location: index.php');
-        break;
-    case "loginreq":
-        $user->login($_POST['user'], $_POST['pass']);
-        break;
-    case "viewpost":
-        $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
-        break;
-    case "createpost":
-        $mainPosts = $posts->createPost($_POST['text'], $userDetails[0]['token'], $_GET["id"]);
-        if (isset($_GET["id"])) {
-            header('Location: index.php?action=viewpost' . $postid);
-        } else {
-            header('Location: index.php');
-        }
-        break;
-    default:
-        $mainPosts = $posts->getPosts('main');
-        break;
+    }
+    break;
+default:
+    $mainPosts = $posts->getPosts('main');
+    break;
 }
 ?>
 <!DOCTYPE html>
