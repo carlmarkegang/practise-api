@@ -1,7 +1,7 @@
 <?php
 require('functions.php');
-$user = new user();
-$posts = new posts();
+$user = new User();
+$posts = new Posts();
 $postid = $_GET["id"] ? "&id=" . $_GET["id"] : "";
 
 if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {

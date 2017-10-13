@@ -1,22 +1,22 @@
 <?php
-#error_reporting(-1);
-#ini_set('display_errors', 'On');
-require('config.php');
+// error_reporting(-1);
+// ini_set('display_errors', 'On');
+require 'config.php';
 
 
-class user
+class User
 {
 
     function login($username, $password)
     {
         $db = new db();
         $date = new DateTime();
-        $user = new user();
+        $user = new User();
         $token = password_hash($date->format('U'), PASSWORD_DEFAULT);
         $update = "UPDATE users set token = '$token' where password='$password' and username = '$username'";
         if ($db->query($update)) {
             $userDetails = $user->getUserDetails($token);
-            if ($userDetails != NULL) {
+            if ($userDetails != null) {
                 setcookie('usertoken', $userDetails[0]['token'], time() + (86400), "/");
                 header('Location: index.php');
             } else {
@@ -48,7 +48,7 @@ class user
 }
 
 
-class posts
+class Posts
 {
 
     function getPosts($type, $parent = null, $limit = 100, $id = null)
@@ -75,7 +75,7 @@ class posts
     {
         $db = new db();
         $date = date("y-m-d");
-        $user = new user();
+        $user = new User();
         $userDetails = $user->getUserDetails($token);
         if ($parent == '') {
             $type = 'main';
@@ -84,7 +84,7 @@ class posts
         }
 
         $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails[0]['id'] . "')";
-        if ($db->query($insert) === TRUE) {
+        if ($db->query($insert) === true) {
             echo "success";
         }
         $db->close();
