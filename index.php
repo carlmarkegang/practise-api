@@ -1,5 +1,9 @@
 <?php
-require 'functions.php';
+# error_reporting(-1);
+# ini_set('display_errors', 'On');
+require 'config.php';
+require 'users.php';
+require 'posts.php';
 $user = new User();
 $posts = new Posts();
 $postid = $_GET["id"] ? "&id=" . $_GET["id"] : "";
@@ -40,7 +44,7 @@ case "viewpost":
     $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
     break;
 case "createpost":
-    $mainPosts = $posts->createPost($_POST['text'], $userDetails[0]['token'], $_GET["id"]);
+    $mainPosts = $posts->createPost($_POST['text'], $userDetails['token'], $_GET["id"]);
     if (isset($_GET["id"])) {
         header('Location: index.php?action=viewpost' . $postid);
     } else {
@@ -55,7 +59,7 @@ default:
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo $userDetails[0]['username'] ?></title>
+    <title><?php echo $userDetails['username'] ?></title>
     <style>
         .mainposts {
             background-color: #e8e8e8;
@@ -68,7 +72,7 @@ default:
 </head>
 <body>
 <h3><a href="index.php">Home</a></h3>
-<h2>Hello <?php echo $userDetails[0]['username'] ?></h2>
+<h2>Hello <?php echo $userDetails['username'] ?></h2>
 
 <form action="index.php?action=createpost<?php echo $postid ?>" method="post">
     text:<br>
