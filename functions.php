@@ -1,6 +1,6 @@
 <?php
-// error_reporting(-1);
-// ini_set('display_errors', 'On');
+error_reporting(-1);
+ini_set('display_errors', 'On');
 require 'config.php';
 
 
@@ -10,20 +10,43 @@ class User
     function login($username, $password)
     {
         $db = new db();
-        $date = new DateTime();
         $user = new User();
-        $token = password_hash($date->format('U'), PASSWORD_DEFAULT);
-        $update = "UPDATE users set token = '$token' where password='$password' and username = '$username'";
-        if ($db->query($update)) {
-            $userDetails = $user->getUserDetails($token);
-            if ($userDetails != null) {
-                setcookie('usertoken', $userDetails[0]['token'], time() + (86400), "/");
-                header('Location: index.php');
+        $userToken = $user->authenticateUser($username, $password);
+        $user->updateUserToken($userToken);
+        $userDetails = $user->getUserDetails($userToken);
+        setcookie('usertoken', $userDetails[0]['token'], time() + (86400), "/");
+        header('Location: index.php');
+        $db->close();
+    }
+
+    function authenticateUser($username, $password)
+    {
+        $db = new db();
+        $query = "SELECT token FROM users where username = '$username' and password='$password'";
+        if ($result = $db->query($query)) {
+            $token = $result->fetch_assoc();
+            #var_dump($token);
+            if ($token != NULL) {
+                return $token;
             } else {
                 header('Location: index.php?action=login&message=1');
+                exit;
             }
         }
-        $db->close();
+    }
+
+    function updateUserToken($token)
+    {
+        $db = new db();
+        $date = new DateTime();
+        $newToken = password_hash($date->format('U'), PASSWORD_DEFAULT);
+        $update = "UPDATE users set token = '$newToken' where token='$token'";
+        if ($db->query($update)) {
+            return true;
+        } else {
+            header('Location: index.php?action=login&message=2');
+            exit;
+        }
     }
 
     function logout()

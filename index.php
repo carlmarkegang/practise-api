@@ -16,6 +16,9 @@ case "login":
     if ($_GET["message"] == 1) {
         echo "<strong>Invalid username or password</strong>";
     }
+    if ($_GET["message"] == 2) {
+        echo "<strong>Error</strong>";
+    }
     echo '
         <form action="index.php?action=loginreq" method="post">
         Username:<br>
