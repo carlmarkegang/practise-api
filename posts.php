@@ -7,12 +7,13 @@ class Posts
     function getPosts($type, $parent = null, $limit = 100, $id = null)
     {
         $db = new db();
+        $query = "SELECT id,text,user_id FROM posts where deleted != 1 ";
         if ($type == "main") {
-            $query = "SELECT id,text FROM posts where type='main'";
+            $query .= "and type='main'";
         } else if ($type == "sub") {
-            $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id asc limit $limit";
+            $query .= "and type='sub' and parent='$parent' order by id asc limit $limit";
         } else if ($type == "id") {
-            $query = "SELECT id,text FROM posts where type='main' and id = $id";
+            $query .= "and type='main' and id = $id";
         }
 
         if ($result = $db->query($query)) {
@@ -26,7 +27,7 @@ class Posts
     function getSubPostAmount($id = null)
     {
         $db = new db();
-        $query = "SELECT id,text FROM posts where type='sub' and parent='$id'";
+        $query = "SELECT id FROM posts where type='sub' and parent='$id' and deleted != 1";
         if ($result = $db->query($query)) {
             $rowCount = $result->num_rows;
             return $rowCount;
@@ -56,6 +57,22 @@ class Posts
             }
         }
         $db->close();
+    }
+
+    function deletePost($token, $id, $parent)
+    {
+        $db = new db();
+        $user = new User();
+        var_dump($token);
+        if ($user->getUserDetails($token)) {
+
+            $update = "UPDATE posts set deleted = '1' where id='$id'";
+            if ($db->query($update) === TRUE) {
+                header('Location: index.php?action=viewpost&id=' . $parent);
+                exit;
+            }
+
+        }
     }
 
 

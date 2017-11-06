@@ -1,6 +1,6 @@
 <?php
-#error_reporting(-1);
-#ini_set('display_errors', 'On');
+error_reporting(-1);
+ini_set('display_errors', 'On');
 require 'config.php';
 require 'users.php';
 require 'posts.php';
@@ -45,6 +45,9 @@ switch ($_GET["action"]) {
     case "createpost":
         $mainPosts = $posts->createPost($_POST['text'], $userDetails['token'], $_GET["id"]);
         break;
+    case "delete":
+        $mainPosts = $posts->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
+        break;
     default:
         $mainPosts = $posts->getPosts('main');
         break;
@@ -66,7 +69,11 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
     } else {
         $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 100);
         foreach ($subPosts as $subPostsKey => $subPostsValue) {
-            echo "<div class='subposts'>" . $subPostsValue['text'] . "</div>";
+            echo "<div class='subposts'>" . $subPostsValue['text'];
+            if ($subPostsValue['user_id'] == $userDetails['id']) {
+                echo "<div><a href='index.php?action=delete&id=" . $subPostsValue['id'] . "&parent=" . $mainPostsValue['id'] . "'>Delete</a></div>";
+            }
+            echo "</div>";
         }
     }
 

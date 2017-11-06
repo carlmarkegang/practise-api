@@ -61,7 +61,7 @@ class User
             $userDetails = $result->fetch_assoc();
             return $userDetails;
         }
-
+        return false;
     }
 }
 
