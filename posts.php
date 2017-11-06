@@ -13,13 +13,23 @@ class Posts
             $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id asc limit $limit";
         } else if ($type == "id") {
             $query = "SELECT id,text FROM posts where type='main' and id = $id";
-        }
+    }
 
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $results_array[] = $row;
             }
             return $results_array;
+        }
+    }
+
+    function getSubPostAmount($id = null)
+    {
+        $db = new db();
+        $query = "SELECT id,text FROM posts where type='sub' and parent='$id'";
+        if ($result = $db->query($query)) {
+            $rowCount = $result->num_rows;
+            return $rowCount;
         }
     }
 

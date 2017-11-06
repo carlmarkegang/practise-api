@@ -1,6 +1,6 @@
 <?php
-# error_reporting(-1);
-# ini_set('display_errors', 'On');
+error_reporting(-1);
+ini_set('display_errors', 'On');
 require 'config.php';
 require 'users.php';
 require 'posts.php';
@@ -32,6 +32,7 @@ switch ($_GET["action"]) {
         <input type="submit">
         </form>
         ';
+        $mainPosts = $posts->getPosts('main');
         break;
     case "logout":
         $user->logout();
@@ -44,11 +45,13 @@ switch ($_GET["action"]) {
         $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
         break;
     case "createpost":
+        if(isset($userDetails['token'])){
         $mainPosts = $posts->createPost($_POST['text'], $userDetails['token'], $_GET["id"]);
         if (isset($_GET["id"])) {
             header('Location: index.php?action=viewpost' . $postid);
         } else {
             header('Location: index.php');
+        }
         }
         break;
     default:
@@ -59,38 +62,56 @@ switch ($_GET["action"]) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo $userDetails['username'] ?></title>
+    <title><?php echo $userDetails['username']; ?></title>
     <style>
         .mainposts {
+            font-size: 20px;
+            font-family: sans-serif;
             background-color: #e8e8e8;
+            padding: 20px;
+            border: 1px dotted black;
+            margin: 10px;
         }
 
         .subposts {
-            padding-left: 20px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #313131;
+        }
+
+        a:hover {
+            color: #828282;
         }
     </style>
 </head>
 <body>
 <h3><a href="index.php">Home</a></h3>
-<h2>Hello <?php echo $userDetails['username'] ?></h2>
-
+<h2>Hello <?php echo $userDetails['username']; ?></h2>
+<?php
+if(isset($userDetails['token'])) {
+echo '
 <form action="index.php?action=createpost<?php echo $postid ?>" method="post">
     text:<br>
     <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
     <input type="submit">
 </form>
+';
+}
+?>
 <?php
 
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
-    echo "<div><a href='index.php?action=viewpost&id=" . $mainPostsValue['id'] . "'><div class='mainposts'>" . $mainPostsValue['text'] . "</div></a>";
+    echo "<div><div class='mainposts'><a href='index.php?action=viewpost&id=" . $mainPostsValue['id'] . "'>" . $mainPostsValue['text'] . "</a>";
 
-    $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 3);
-    foreach ($subPosts as $subPostsKey => $subPostsValue) {
-        echo "<div class='subposts'>" . $subPostsValue['text'] . "</div>";
+    if ($_GET["action"] != 'viewpost') {
+        $subPosts = $posts->getSubPostAmount($mainPostsValue['id']);
+        echo "<div class='subposts'>Inlägg: " . $subPosts . "</div>";
     }
 
-    echo "</div>";
+    echo "</div></div>";
 
 }
 ?>
