@@ -13,7 +13,7 @@ class Posts
             $query = "SELECT id,text FROM posts where type='sub' and parent='$parent' order by id asc limit $limit";
         } else if ($type == "id") {
             $query = "SELECT id,text FROM posts where type='main' and id = $id";
-    }
+        }
 
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
@@ -45,13 +45,14 @@ class Posts
         } else {
             $type = 'sub';
         }
-
-        $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "')";
-        if ($db->query($insert) === true) {
-            if (isset($parent)) {
-                header('Location: index.php?action=viewpost&id=' . $parent);
-            } else {
-                header('Location: index.php');
+        if ($text != '') {
+            $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "')";
+            if ($db->query($insert) === true) {
+                if (isset($parent)) {
+                    header('Location: index.php?action=viewpost&id=' . $parent);
+                } else {
+                    header('Location: index.php');
+                }
             }
         }
         $db->close();
