@@ -48,7 +48,11 @@ class Posts
 
         $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "')";
         if ($db->query($insert) === true) {
-            echo "success";
+            if (isset($parent)) {
+                header('Location: index.php?action=viewpost&id=' . $parent);
+            } else {
+                header('Location: index.php');
+            }
         }
         $db->close();
     }

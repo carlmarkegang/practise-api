@@ -10,11 +10,20 @@ $postid = $_GET["id"] ? "&id=" . $_GET["id"] : "";
 
 if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
     $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
-    echo '<h4><a href="index.php?action=logout">Logga ut</a></h4>';
 } else if (!$_GET["action"]) {
     header('Location: index.php?action=login');
 }
 
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<h3><a href="index.php">Home</a></h3>
+<?php
 switch ($_GET["action"]) {
     case "login":
         if ($_GET["message"] == 1) {
@@ -36,7 +45,6 @@ switch ($_GET["action"]) {
         break;
     case "logout":
         $user->logout();
-        header('Location: index.php');
         break;
     case "loginreq":
         $user->login($_POST['user'], $_POST['pass']);
@@ -46,58 +54,16 @@ switch ($_GET["action"]) {
         break;
     case "createpost":
         $mainPosts = $posts->createPost($_POST['text'], $userDetails['token'], $_GET["id"]);
-        if (isset($_GET["id"])) {
-            header('Location: index.php?action=viewpost' . $postid);
-        } else {
-            header('Location: index.php');
-        }
         break;
     default:
         $mainPosts = $posts->getPosts('main');
         break;
 }
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Title</title>
-    <style>
-        .mainposts {
-            font-size: 20px;
-            font-family: sans-serif;
-            background-color: #e8e8e8;
-            padding: 20px;
-            border: 1px dotted black;
-            margin: 10px;
-        }
 
-        .subpostsDescription {
-            font-size: 14px;
-        }
-
-        a {
-            color: #313131;
-        }
-
-        a:hover {
-            color: #828282;
-        }
-
-        .subposts {
-            background-color: #f9f9f9;
-            padding: 10px;
-            font-size: 14px;
-            margin: 5px 0px;
-            border: 0.5px dotted black;
-        }
-    </style>
-</head>
-<body>
-<h3><a href="index.php">Home</a></h3>
-<h2>Hello <?php echo $userDetails['username']; ?></h2>
-<?php
 if (isset($userDetails['token'])) {
-    echo '
+echo
+'<h2>Hello '. $userDetails['username'].'</h2>
+<h4><a href="index.php?action=logout">Logga ut</a></h4>
 <form action="index.php?action=createpost' . $postid . '" method="post">
     text:<br>
     <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
@@ -116,7 +82,7 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
         $subPosts = $posts->getSubPostAmount($mainPostsValue['id']);
         echo "<div class='subpostsDescription'>Inlägg: " . $subPosts . "</div>";
     } else {
-        $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 3);
+        $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 100);
         foreach ($subPosts as $subPostsKey => $subPostsValue) {
             echo "<div class='subposts'>" . $subPostsValue['text'] . "</div>";
         }

@@ -47,6 +47,7 @@ class User
     {
         if (isset($_COOKIE['usertoken'])) {
             setcookie("usertoken", "", time() - 3600);
+            header('Location: index.php');
         }
     }
 
