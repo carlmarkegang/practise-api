@@ -21,7 +21,7 @@ class User
         if ($result = $db->query($query)) {
             $token = $result->fetch_assoc();
             if ($token != NULL) {
-                return $token;
+                return $token['token'];
             } else {
                 header('Location: index.php?action=login&message=1');
                 exit;
