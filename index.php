@@ -26,21 +26,11 @@ if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
 <?php
 switch ($_GET["action"]) {
     case "login":
-        if ($_GET["message"] == 1) {
+        if ($_GET["message"] == 1)
             echo "<strong>Invalid username or password</strong>";
-        }
-        if ($_GET["message"] == 2) {
+        if ($_GET["message"] == 2)
             echo "<strong>Error</strong>";
-        }
-        echo '
-        <form action="index.php?action=loginreq" method="post">
-        Username:<br>
-        <input type="text" name="user"><br>
-        Pass:<br>
-        <input type="text" name="pass"><br>
-        <input type="submit">
-        </form>
-        ';
+        include "loginform.php";
         $mainPosts = $posts->getPosts('main');
         break;
     case "logout":
@@ -61,15 +51,7 @@ switch ($_GET["action"]) {
 }
 
 if (isset($userDetails['token'])) {
-echo
-'<h2>Hello '. $userDetails['username'].'</h2>
-<h4><a href="index.php?action=logout">Logga ut</a></h4>
-<form action="index.php?action=createpost' . $postid . '" method="post">
-    text:<br>
-    <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
-    <input type="submit">
-</form>
-';
+    include "postform.php";
 }
 ?>
 <?php
