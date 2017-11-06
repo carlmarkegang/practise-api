@@ -47,7 +47,7 @@ class Posts
             $type = 'sub';
         }
         if ($text != '') {
-            $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "')";
+            $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`, `deleted`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "', 0)";
             if ($db->query($insert) === true) {
                 if (isset($parent)) {
                     header('Location: index.php?action=viewpost&id=' . $parent);
