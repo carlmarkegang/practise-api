@@ -24,6 +24,7 @@ class LoginController
         $user = new User();
         $user->logout();
         require_once('views/login/logout.php');
+        header('Location: index.php');
 
     }
 }
