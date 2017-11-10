@@ -1,4 +1,7 @@
-<form action="index.php?action=loginreq" method="post">
+<p>Login:</p>
+
+
+<form action="?controller=login&action=login" method="post">
     Username:<br>
     <input type="text" name="user"><br>
     Pass:<br>

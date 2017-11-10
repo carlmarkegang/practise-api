@@ -1,86 +1,14 @@
 <?php
-error_reporting(-1);
-ini_set('display_errors', 'On');
-require 'config.php';
-require 'users.php';
-require 'posts.php';
-$user = new User();
-$posts = new Posts();
-$postid = $_GET["id"] ? "&id=" . $_GET["id"] : "";
+require_once('config.php');
+require_once('models/users.php');
 
-if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
-    $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
-} else if (!$_GET["action"]) {
-    header('Location: index.php?action=login');
+if (isset($_GET['controller']) && isset($_GET['action'])) {
+    $controller = $_GET['controller'];
+    $action = $_GET['action'];
+} else {
+    $controller = 'pages';
+    $action = 'home';
 }
 
+require_once('views/layout.php');
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-<h3><a href="index.php">Home</a></h3>
-<?php
-switch ($_GET["action"]) {
-    case "login":
-        if ($_GET["message"] == 1)
-            echo "<strong>Invalid username or password</strong>";
-        if ($_GET["message"] == 2)
-            echo "<strong>Error</strong>";
-        include "loginform.php";
-        $mainPosts = $posts->getPosts('main');
-        break;
-    case "logout":
-        $user->logout();
-        break;
-    case "loginreq":
-        $user->login($_POST['user'], $_POST['pass']);
-        break;
-    case "viewpost":
-        $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
-        break;
-    case "createpost":
-        $mainPosts = $posts->createPost($_POST['text'], $userDetails['token'], $_GET["id"]);
-        break;
-    case "delete":
-        $mainPosts = $posts->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
-        break;
-    default:
-        $mainPosts = $posts->getPosts('main');
-        break;
-}
-
-if (isset($userDetails['token'])) {
-    include "postform.php";
-}
-?>
-<?php
-
-foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
-
-    echo "<div><div class='mainposts'><a href='index.php?action=viewpost&id=" . $mainPostsValue['id'] . "'>" . $mainPostsValue['text'] . "</a>";
-
-    if ($_GET["action"] != 'viewpost') {
-        $subPosts = $posts->getSubPostAmount($mainPostsValue['id']);
-        echo "<div class='subpostsDescription'>Inlägg: " . $subPosts . "</div>";
-    } else {
-        $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 100);
-        foreach ($subPosts as $subPostsKey => $subPostsValue) {
-            echo "<div class='subposts'>" . $subPostsValue['text'];
-            if ($subPostsValue['user_id'] == $userDetails['id']) {
-                echo "<div><a href='index.php?action=delete&id=" . $subPostsValue['id'] . "&parent=" . $mainPostsValue['id'] . "'>Delete</a></div>";
-            }
-            echo "</div>";
-        }
-    }
-
-    echo "</div></div>";
-
-}
-?>
-
-</body>
-</html>

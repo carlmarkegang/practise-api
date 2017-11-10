@@ -5,9 +5,8 @@ class User
 
     function login($username, $password)
     {
-        $user = new User();
-        if ($userToken = $user->authenticateUser($username, $password)) {
-            if ($newToken = $user->updateUserToken($userToken)) {
+        if ($userToken = $this->authenticateUser($username, $password)) {
+            if ($newToken = $this->updateUserToken($userToken)) {
                 setcookie('usertoken', $newToken, time() + (86400), "/");
                 header('Location: index.php');
             }
@@ -23,8 +22,7 @@ class User
             if ($token != NULL) {
                 return $token['token'];
             } else {
-                header('Location: index.php?action=login&message=1');
-                exit;
+                return false;
             }
         }
     }
@@ -38,7 +36,7 @@ class User
         if ($db->query($update) === TRUE) {
             return $newToken;
         } else {
-            header('Location: index.php?action=login&message=2');
+            header('Location: error.php');
             exit;
         }
     }
@@ -47,8 +45,9 @@ class User
     {
         if (isset($_COOKIE['usertoken'])) {
             setcookie("usertoken", "", time() - 3600);
-            header('Location: index.php');
+            return true;
         }
+        return false;
     }
 
     function getUserDetails($token)

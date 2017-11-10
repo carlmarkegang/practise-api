@@ -1,6 +1,5 @@
 <?php
 
-
 class Posts
 {
 
@@ -50,9 +49,9 @@ class Posts
             $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`, `deleted`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "', 0)";
             if ($db->query($insert) === true) {
                 if (isset($parent)) {
-                    header('Location: index.php?action=viewpost&id=' . $parent);
+                    header('Location: index.php?controller=posts&action=show&id=' . $parent);
                 } else {
-                    header('Location: index.php');
+                    header('Location: index.php?controller=posts&action=index');
                 }
             }
         }
@@ -68,7 +67,7 @@ class Posts
 
             $update = "UPDATE posts set deleted = '1' where id='$id'";
             if ($db->query($update) === TRUE) {
-                header('Location: index.php?action=viewpost&id=' . $parent);
+                header('Location: index.php?controller=posts&action=show&id=' . $parent);
                 exit;
             }
 
