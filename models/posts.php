@@ -62,10 +62,9 @@ class Posts
     {
         $db = new db();
         $user = new User();
-        var_dump($token);
-        if ($user->getUserDetails($token)) {
-
-            $update = "UPDATE posts set deleted = '1' where id='$id'";
+        if ($userdetails = $user->getUserDetails($token)) {
+            $userid = $userdetails['id'];
+            $update = "UPDATE posts set deleted = '1' where id='$id' and user_id = '$userid'";
             if ($db->query($update) === TRUE) {
                 header('Location: index.php?controller=posts&action=show&id=' . $parent);
                 exit;
