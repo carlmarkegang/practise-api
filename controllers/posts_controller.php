@@ -40,8 +40,8 @@ class postsController
         require_once('models/users.php');
         $user = new User();
         $posts = new Posts();
-        $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
-        $posts->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
+        if($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
+            $posts->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
     }
 }
 

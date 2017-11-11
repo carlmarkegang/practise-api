@@ -14,7 +14,7 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
     foreach ($subPosts as $subPostsKey => $subPostsValue) {
         echo "<div class='subposts'>" . $subPostsValue['text'];
         if ($subPostsValue['user_id'] == $userDetails['id']) {
-            echo "<div><a href='index.php?controller=posts&action=deletepost&id=" . $subPostsValue['id'] . "&parent=" . $mainPostsValue['id'] . "'>Delete</a></div>";
+            echo "<div><a onclick='deletePost(" . $mainPostsValue['id'] . "," .  $subPostsValue['id'] . ")' href='#'>Delete</a></div>";
         }
         echo "</div>";
     }
@@ -23,3 +23,10 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
 }
 ?>
+<script>
+    function deletePost(mainpost,subpost) {
+        if (confirm("Are you sure you want to delete this post?") == true) {
+            window.location.replace('index.php?controller=posts&action=deletepost&parent=' + mainpost + '&id=' + subpost);
+        }
+    }
+</script>
