@@ -5,20 +5,9 @@ ini_set('display_errors', 'On');
 
 function call($controller, $action)
 {
+    $className = $controller . 'Controller';
     require_once('controllers/' . $controller . '_controller.php');
-    require_once('models/users.php');
-    switch ($controller) {
-        case 'pages':
-            $controller = new PagesController();
-            break;
-        case 'posts':
-            $controller = new PostsController();
-            break;
-        case 'login':
-            $controller = new LoginController();
-            break;
-    }
-
+    $controller = new $className();
     $controller->{$action}();
 }
 

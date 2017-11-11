@@ -1,6 +1,6 @@
 <?php
 
-class PostsController
+class postsController
 {
     public function index()
     {

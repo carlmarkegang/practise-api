@@ -1,11 +1,10 @@
 <?php
 
-echo
-    '<form action="index.php?controller=posts&action=createpost&id=' . $_GET['id'] . '" method="post">
-text:<br>
-<textarea name="text" id="text" rows="5" cols="40"></textarea><br>
-<input type="submit">
-</form>';
+echo '<form action="index.php?controller=posts&action=createpost&id=' . $_GET['id'] . '" method="post">
+    Text:<br>
+    <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
+    <input type="submit">
+    </form>';
 
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 

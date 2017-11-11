@@ -1,6 +1,6 @@
 <?php
 
-class LoginController
+class loginController
 {
     public function index()
     {
@@ -14,6 +14,7 @@ class LoginController
             if (!$user->login($_POST['user'], $_POST['pass'])) {
                 $errorMessage = 'Incorrect username or password';
                 require_once('views/login/login.php');
+                require_once('views/login/index.php');
             }
         }
 
