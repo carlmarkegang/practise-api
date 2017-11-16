@@ -23,11 +23,8 @@ class User
             if ($userDetails != NULL) {
                 if (password_verify($password, $userDetails['password']))
                     return $userDetails['token'];
-                else
-                    return false;
-            } else {
-                return false;
             }
+            return false;
         }
     }
 
