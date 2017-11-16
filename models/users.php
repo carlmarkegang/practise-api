@@ -84,12 +84,7 @@ class User
 
     function changeUserPass($username, $password)
     {
-        if ($userToken = $this->authenticateUser($username, $password)) {
-            if ($newToken = $this->updateUserToken($userToken)) {
-                setcookie('usertoken', $newToken, time() + (86400), "/");
-                header('Location: index.php');
-            }
-        }
+
     }
 
     function getNewHash($input = null)
