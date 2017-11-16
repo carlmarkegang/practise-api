@@ -1,4 +1,3 @@
-Failed:
 <?php
 
 echo $errorMessage;

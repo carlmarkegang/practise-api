@@ -8,7 +8,7 @@ class User
         if ($userToken = $this->authenticateUser($username, $password)) {
             if ($newToken = $this->updateUserToken($userToken)) {
                 setcookie('usertoken', $newToken, time() + (86400), "/");
-                header('Location: index.php');
+                return true;
             }
         }
     }
@@ -16,11 +16,16 @@ class User
     function authenticateUser($username, $password)
     {
         $db = new db();
-        $query = "SELECT token FROM users where username = '$username' and password='$password'";
+        $query = "SELECT token,password FROM users where username = '$username'";
+
         if ($result = $db->query($query)) {
-            $token = $result->fetch_assoc();
-            if ($token != NULL) {
-                return $token['token'];
+            $userDetails = $result->fetch_assoc();
+            if ($userDetails != NULL) {
+                $hash = $userDetails['password'];
+                if (password_verify($password, $hash))
+                    return $userDetails['token'];
+                else
+                    return false;
             } else {
                 return false;
             }
@@ -30,8 +35,7 @@ class User
     function updateUserToken($token)
     {
         $db = new db();
-        $date = new DateTime();
-        $newToken = password_hash($date->format('U'), PASSWORD_DEFAULT);
+        $newToken = $this->getNewHash();
         $update = "UPDATE users set token = '$newToken' where token='$token'";
         if ($db->query($update) === TRUE) {
             return $newToken;
@@ -62,5 +66,53 @@ class User
         }
         return false;
     }
+
+    function createUser($username, $password)
+    {
+        $db = new db();
+        $hash = $this->getNewHash($password);
+        $newToken = $this->getNewHash();
+        if (!$this->userExists($username)) {
+            $insert = "INSERT INTO `users` (`id`, `username`, `password`, `token`) VALUES (NULL, '$username', '$hash', '$newToken')";
+            if ($db->query($insert) === true) {
+                return true;
+            }
+        }
+        echo 'User already exist';
+    }
+
+
+    function changeUserPass($username, $password)
+    {
+        if ($userToken = $this->authenticateUser($username, $password)) {
+            if ($newToken = $this->updateUserToken($userToken)) {
+                setcookie('usertoken', $newToken, time() + (86400), "/");
+                header('Location: index.php');
+            }
+        }
+    }
+
+    function getNewHash($input = null)
+    {
+        if (!$input) {
+            $date = new DateTime();
+            $input = $date->format('U');
+        }
+        return password_hash($input, PASSWORD_DEFAULT);
+
+    }
+
+    function userExists($username)
+    {
+        $db = new db();
+        $query = "SELECT * FROM users where username='$username'";
+        if ($result = $db->query($query)) {
+            if ($result->num_rows > 0) {
+                return true;
+            }
+            return false;
+        }
+    }
+
 }
 

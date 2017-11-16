@@ -14,7 +14,7 @@ function call($controller, $action)
 $controllers = array(
     'pages' => ['home', 'error'],
     'posts' => ['index', 'show', 'createpost', 'deletepost'],
-    'login' => ['index', 'login', 'logout']
+    'login' => ['index', 'login', 'logout', 'createuser']
 );
 
 if (array_key_exists($controller, $controllers)) {
