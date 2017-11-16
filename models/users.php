@@ -21,8 +21,7 @@ class User
         if ($result = $db->query($query)) {
             $userDetails = $result->fetch_assoc();
             if ($userDetails != NULL) {
-                $hash = $userDetails['password'];
-                if (password_verify($password, $hash))
+                if (password_verify($password, $userDetails['password']))
                     return $userDetails['token'];
                 else
                     return false;
