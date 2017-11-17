@@ -10,9 +10,9 @@
         <a href='?controller=posts&action=index'>Posts</a>
         <?php
         if ($userDetails)
-            echo "<a href='?controller=login&action=logout'>Logout</a>";
+            echo "<a href='?controller=user&action=logout'>Logout</a>";
         else
-            echo "<a href='?controller=login&action=index'>Login</a>";
+            echo "<a href='?controller=user&action=index'>Login</a>";
         ?>
     </header>
 
