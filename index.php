@@ -1,8 +1,10 @@
 <?php
+require_once('models/userModel.php');
 require_once('config.php');
-require_once('models/users.php');
 
-$user = new User();
+
+
+$user = new UserModel();
 if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '')
     $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
 
