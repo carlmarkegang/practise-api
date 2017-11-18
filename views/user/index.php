@@ -1,7 +1,7 @@
 <p>Login:</p>
 
 
-<form action="?controller=user&action=login" method="post">
+<form action="?controller=user&action=index" method="post">
     Username:<br>
     <input type="text" name="user"><br>
     Pass:<br>

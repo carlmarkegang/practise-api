@@ -1,10 +1,12 @@
+<h4><a href="?controller=posts&action=index">Tillbaka</a></h4>
 <?php
-
-echo '<form action="index.php?controller=posts&action=createpost&id=' . $_GET['id'] . '" method="post">
+if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
+    echo '<form action="index.php?controller=posts&action=createpost&id=' . $_GET['id'] . '" method="post">
     Text:<br>
     <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
     <input type="submit">
     </form>';
+}
 
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 

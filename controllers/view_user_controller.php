@@ -7,10 +7,7 @@ class viewuserController
     public function index()
     {
         require_once('views/user/index.php');
-    }
 
-    public function login()
-    {
         if (isset($_POST['user']) && isset($_POST['pass'])) {
             $userController = new UserController();
             if (!$userController->login($_POST['user'], $_POST['pass'])) {
@@ -20,7 +17,6 @@ class viewuserController
                 header('Location: index.php');
             }
         }
-
     }
 
     public function createuser()

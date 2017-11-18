@@ -1,7 +1,6 @@
 <?php
-
-error_reporting(-1);
-ini_set('display_errors', 'On');
+#error_reporting(-1);
+#ini_set('display_errors', 'On');
 
 
 function call($controller, $action)
@@ -16,7 +15,7 @@ function call($controller, $action)
 $controllers = array(
     'pages' => ['home', 'error'],
     'posts' => ['index', 'show', 'createpost', 'deletepost'],
-    'user' => ['index', 'login', 'logout', 'createuser']
+    'user' => ['index', 'logout', 'createuser']
 );
 
 if (array_key_exists($controller, $controllers)) {
