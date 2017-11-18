@@ -11,7 +11,7 @@ class viewuserController
         if (isset($_POST['user']) && isset($_POST['pass'])) {
             $userController = new UserController();
             if (!$userController->login($_POST['user'], $_POST['pass'])) {
-                $errorMessage = 'Incorrect username or password';
+                echo '<br>Incorrect username or password<br>';
                 require_once('views/user/index.php');
             } else {
                 header('Location: index.php');

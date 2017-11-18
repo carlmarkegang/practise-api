@@ -30,8 +30,7 @@ class UserController extends UserModel
         if ($db->query($update) === TRUE) {
             return $newToken;
         } else {
-            header('Location: error.php');
-            exit;
+            return false;
         }
     }
 

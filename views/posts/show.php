@@ -8,17 +8,25 @@ if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
     </form>';
 }
 
+
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
-    echo "<div><div class='mainposts'>" . $mainPostsValue['text'];
+    echo "<div><div class='mainposts'><span class='mainpostsuser'>" . $user->getUsernameWithId($mainPostsValue['user_id']) . "</span> - " . $mainPostsValue['text'];
 
     $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], 100);
+
     foreach ($subPosts as $subPostsKey => $subPostsValue) {
-        echo "<div class='subposts'>" . $subPostsValue['text'];
-        if ($subPostsValue['user_id'] == $userDetails['id']) {
-            echo "<div><a onclick='deletePost(" . $mainPostsValue['id'] . "," . $subPostsValue['id'] . ")' href='#'>Delete</a></div>";
-        }
+
+        echo "<div class='subposts'><div class='subpostsuser'>" .
+        $user->getUsernameWithId($subPostsValue['user_id']) . " - " . $subPostsValue['created'] .
+        "</div><div class='subpoststext'>" . $subPostsValue['text'] . "</div>";
+
+            if ($subPostsValue['user_id'] == $userDetails['id']) {
+                echo "<div class='subpostsedit'><a onclick='deletePost(" . $mainPostsValue['id'] . "," . $subPostsValue['id'] . ")' href='#'>delete</a>
+                <a onclick='editPost(" . $mainPostsValue['id'] . "," . $subPostsValue['id'] . ")' href='#'>edit</a></div>";
+            }
         echo "</div>";
+
     }
 
     echo "</div></div>";

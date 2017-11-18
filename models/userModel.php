@@ -43,5 +43,23 @@ class UserModel
         }
     }
 
+    function getUsernameWithId($id)
+    {
+
+        $db = new db();
+        $query = "SELECT username FROM users where id=$id";
+
+        if ($result = $db->query($query)) {
+            $username = $result->fetch_row();
+
+            if ($username[0] == '')
+                return 'Unknown Username';
+
+            return $username[0];
+        }
+
+
+    }
+
 }
 

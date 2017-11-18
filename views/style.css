@@ -4,7 +4,7 @@ body {
     margin: 0px;
 }
 
-header{
+header {
     background-color: #e8e8e8;
     border: 0.5px dotted black;
     padding: 10px;
@@ -38,7 +38,7 @@ a:hover {
     border: 0.5px dotted black;
 }
 
-#wrap{
+#wrap {
     width: 800px;
     margin: 0px auto;
     background-color: #f9f9f9;
@@ -46,6 +46,23 @@ a:hover {
     padding: 8px 6px
 }
 
-#login{
+#login {
     float: right;
+}
+
+.subpostsuser {
+    padding: 2px 0px;
+    font-size: 12px;
+}
+
+.subpoststext {
+    padding: 10px;
+}
+
+.subpostsedit {
+    font-size: 12px;
+}
+
+.mainpostsuser{
+    color: #6d6d6d;
 }
