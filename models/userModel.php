@@ -45,7 +45,6 @@ class UserModel
 
     function getUsernameWithId($id)
     {
-
         $db = new db();
         $query = "SELECT username FROM users where id=$id";
 
@@ -57,8 +56,6 @@ class UserModel
 
             return $username[0];
         }
-
-
     }
 
 }

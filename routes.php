@@ -2,7 +2,6 @@
 #error_reporting(-1);
 #ini_set('display_errors', 'On');
 
-
 function call($controller, $action)
 {
     $className = 'view' . $controller . 'Controller';
@@ -15,7 +14,7 @@ function call($controller, $action)
 $controllers = array(
     'pages' => ['home', 'error'],
     'posts' => ['index', 'show', 'createpost', 'deletepost'],
-    'user' => ['index', 'logout', 'createuser']
+    'user' => ['index', 'logout', 'createuser', 'view']
 );
 
 if (array_key_exists($controller, $controllers)) {

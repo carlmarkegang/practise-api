@@ -1,6 +1,5 @@
 <p>Create user:</p>
 
-
 <form action="?controller=user&action=createuser" method="post">
     Username:<br>
     <input type="text" name="user"><br>

@@ -8,7 +8,7 @@ class PostModel
         $db = new db();
         $query = "SELECT id,text,user_id,created FROM posts where deleted != 1 ";
         if ($type == "main") {
-            $query .= "and type='main'";
+            $query .= "and type='main' limit $limit";
         } else if ($type == "sub") {
             $query .= "and type='sub' and parent='$parent' order by id asc limit $limit";
         } else if ($type == "id") {
@@ -32,5 +32,18 @@ class PostModel
             return $rowCount;
         }
     }
+
+    function getUserSpecificMainPosts($user = null, $limit = 100)
+    {
+        $db = new db();
+        $query = "SELECT id,text,user_id,created FROM posts where deleted != 1 and type='main' AND user_id='$user' limit $limit";
+        if ($result = $db->query($query)) {
+            while ($row = $result->fetch_assoc()) {
+                $results_array[] = $row;
+            }
+            return $results_array;
+        }
+    }
+
 
 }

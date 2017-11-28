@@ -41,6 +41,17 @@ class viewuserController
         header('Location: index.php');
 
     }
+
+    public function view()
+    {
+        $posts = new PostModel();
+        $user = new UserModel();
+        $id = $_GET["id"];
+
+        $username = $user->getUsernameWithId($id);
+        $mainPosts = $posts->getUserSpecificMainPosts($id);
+        require_once('views/user/view.php');
+    }
 }
 
 ?>

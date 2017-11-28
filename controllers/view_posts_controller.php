@@ -6,8 +6,6 @@ class viewpostsController
 {
     public function index()
     {
-
-
         $posts = new PostModel();
         $mainPosts = $posts->getPosts('main');
         require_once('views/posts/index.php');

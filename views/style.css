@@ -66,3 +66,32 @@ a:hover {
 .mainpostsuser{
     color: #6d6d6d;
 }
+
+.subpostsuser a {
+    text-decoration: none;
+}
+
+.mainpostsuser a {
+    text-decoration: none;
+}
+
+textarea {
+    border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+    background-color: #d2d2d2;
+}
+
+input[type="submit"] {
+    border-radius: 5px;
+    color: #353535;
+    background-color: #c1c1c1;
+    border: 0;
+    padding: 7px;
+    cursor: pointer;
+}
+
+form{
+    margin:10px;
+}
