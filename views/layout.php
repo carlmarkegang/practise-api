@@ -4,6 +4,7 @@
     <title>Posts</title>
     <link rel="stylesheet" type="text/css" href="views/style.css">
 </head>
+<body>
 <div id='wrap'>
     <header>
         <a href='/'>Home</a>
