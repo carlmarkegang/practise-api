@@ -18,7 +18,7 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
     foreach ($subPosts as $subPostsKey => $subPostsValue) {
 
         echo "<div class='subposts'><div class='subpostsuser'>" .
-            "<a href='?controller=user&action=view&id=" . $mainPostsValue['user_id'] . "'>" . $user->getUsernameWithId($mainPostsValue['user_id']) . "</a>" . " - " . $subPostsValue['created'] .
+            "<a href='?controller=user&action=view&id=" . $mainPostsValue['user_id'] . "'>" . $user->getUsernameWithId($subPostsValue['user_id']) . "</a>" . " - " . $subPostsValue['created'] .
             "</div><div class='subpoststext'>" . nl2br($subPostsValue['text']) . "</div>";
 
         if ($subPostsValue['user_id'] == $userDetails['id']) {
