@@ -6,7 +6,7 @@ class PostController extends PostModel
     function createPost($text, $token, $parent = '')
     {
         $db = new db();
-        $date = date("d-m-y H:i:s");
+        $date = date("d-m-Y H:i:s");
         $user = new UserModel();
         $userDetails = $user->getUserDetails($token);
         if ($parent == '') {

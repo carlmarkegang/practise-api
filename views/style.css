@@ -95,3 +95,16 @@ input[type="submit"] {
 form{
     margin:10px;
 }
+
+.subpostcanceledit {
+    border-radius: 5px;
+    color: #353535;
+    background-color: #c1c1c1;
+    border: 0;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.subpostcanceledit:hover {
+    background-color: #d2d2d2;
+}
