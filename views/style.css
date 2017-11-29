@@ -108,3 +108,16 @@ form{
 .subpostcanceledit:hover {
     background-color: #d2d2d2;
 }
+
+.alignleft {
+    display: inline-block;
+    width: 49%;
+    margin: 0;
+    padding: 0px;
+    vertical-align: top;
+}
+
+.created {
+    font-size: 13px;
+    color: #525252;
+}

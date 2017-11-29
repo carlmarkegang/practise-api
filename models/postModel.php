@@ -36,7 +36,7 @@ class PostModel
     function getUserSpecificMainPosts($user = null, $limit = 100)
     {
         $db = new db();
-        $query = "SELECT id,text,user_id,created FROM posts where deleted != 1 and type='main' AND user_id='$user' limit $limit";
+        $query = "SELECT id,text,user_id,created FROM posts where deleted != 1 and type='main' AND user_id='$user' order by created desc limit $limit ";
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $results_array[] = $row;
@@ -49,7 +49,7 @@ class PostModel
     function getUserSpecificSubPosts($user = null, $limit = 100)
     {
         $db = new db();
-        $query = "SELECT id,text,user_id,created,parent FROM posts where deleted != 1 and type='sub' AND user_id='$user' limit $limit";
+        $query = "SELECT id,text,user_id,created,parent FROM posts where deleted != 1 and type='sub' AND user_id='$user' order by created desc limit $limit";
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $results_array[] = $row;

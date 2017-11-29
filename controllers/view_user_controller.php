@@ -49,8 +49,8 @@ class viewuserController
         $id = $_GET["id"];
 
         $username = $user->getUsernameWithId($id);
-        $mainPosts = $posts->getUserSpecificMainPosts($id);
-        $subPosts = $posts->getUserSpecificSubPosts($id);
+        $mainPosts = $posts->getUserSpecificMainPosts($id,5);
+        $subPosts = $posts->getUserSpecificSubPosts($id,5);
         require_once('views/user/view.php');
     }
 }
