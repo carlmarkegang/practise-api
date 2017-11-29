@@ -46,4 +46,16 @@ class PostModel
     }
 
 
+    function getUserSpecificSubPosts($user = null, $limit = 100)
+    {
+        $db = new db();
+        $query = "SELECT id,text,user_id,created,parent FROM posts where deleted != 1 and type='sub' AND user_id='$user' limit $limit";
+        if ($result = $db->query($query)) {
+            while ($row = $result->fetch_assoc()) {
+                $results_array[] = $row;
+            }
+            return $results_array;
+        }
+    }
+
 }
