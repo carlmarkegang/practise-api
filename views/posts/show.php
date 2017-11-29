@@ -21,17 +21,9 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
             "<a href='?controller=user&action=view&id=" . $mainPostsValue['user_id'] . "'>" . $user->getUsernameWithId($subPostsValue['user_id']) . "</a>" . " - " . $subPostsValue['created'] .
             "</div><div class='subpoststext'>" . nl2br($subPostsValue['text']) . "</div>";
 
-        if ($subPostsValue['user_id'] == $userDetails['id']) {
+        if ($subPostsValue['user_id'] == $userDetails['id'])
+            include("userSpecific.php");
 
-            echo '<form action="index.php?controller=posts&action=editpost&parent=' . $mainPostsValue['id'] . '&id=' . $subPostsValue['id'] . '" method="post" class="subpostsedittext" style="display:none;">
-                <textarea name="text" id="text" rows="5" cols="40">' . $subPostsValue['text'] . '</textarea><br>
-                <input type="submit"> <span class="subpostcanceledit" onclick="cancelEditPost(this)">Cancel</span>
-                </form>';
-
-            echo "<div class='subpostsedit'><a onclick='deletePost(" . $mainPostsValue['id'] . "," . $subPostsValue['id'] . ")' href='#'>delete</a>
-                <a onclick='editPost(this)' href='#'>edit</a></div>";
-
-        }
         echo "</div>";
 
     }
