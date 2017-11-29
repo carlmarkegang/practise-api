@@ -19,7 +19,7 @@ foreach ($subPosts as $subPostsKey => $subPostsValue) {
 
     $mainPost = $posts->getPosts('id', null, null, $subPostsValue['parent']);
     echo "<div class='subposts'><a href='index.php?controller=posts&action=show&id=" . $subPostsValue['parent'] . "'>" . $mainPost[0]['text'] . "</a><br>";
-    echo $subPostsValue['text'] . "</div>";
+    echo nl2br($subPostsValue['text']) . "</div>";
 
 }
 ?>
