@@ -13,7 +13,7 @@ function call($controller, $action)
 
 $controllers = array(
     'pages' => ['home', 'error'],
-    'posts' => ['index', 'show', 'createpost', 'deletepost'],
+    'posts' => ['index', 'show', 'createpost', 'deletepost','editpost'],
     'user' => ['index', 'logout', 'createuser', 'view']
 );
 

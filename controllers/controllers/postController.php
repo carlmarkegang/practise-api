@@ -42,5 +42,20 @@ class PostController extends PostModel
         }
     }
 
+    function editPost($token, $id, $parent, $text)
+    {
+        $db = new db();
+        $user = new UserModel();
+        if ($userdetails = $user->getUserDetails($token)) {
+            $userid = $userdetails['id'];
+            $update = "UPDATE posts set text = '" . $text . "' where id='$id' and user_id = '$userid'";
+            if ($db->query($update) === TRUE) {
+                header('Location: index.php?controller=posts&action=show&id=' . $parent);
+                exit;
+            }
+
+        }
+    }
+
 
 }

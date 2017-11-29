@@ -39,6 +39,14 @@ class viewpostsController
         if ($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
             $PostController->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
     }
+
+    public function editpost()
+    {
+        $user = new UserModel();
+        $PostController = new PostController();
+        if ($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
+            $PostController->editPost($userDetails['token'], $_GET["id"], $_GET["parent"], $_POST['text']);
+    }
 }
 
 ?>
