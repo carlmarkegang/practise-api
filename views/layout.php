@@ -10,10 +10,12 @@
         <a href='/'>Home</a>
         <a href='?controller=posts&action=index'>Posts</a>
         <?php
-        if ($userDetails)
-            echo "<a href='?controller=user&action=logout' id='login'>Logout</a>";
+        if ($userDetails){
+            echo "<a href='?controller=user&action=logout' class='login'>Logout</a>";
+            echo "<a href='?controller=user&action=view&id=" . $userDetails['id'] . "' class='login'>Account</a>";
+        }
         else
-            echo "<a href='?controller=user&action=index' id='login'>Login</a>";
+            echo "<a href='?controller=user&action=index' class='login'>Login</a>";
         ?>
     </header>
     <?php require_once('routes.php'); ?>

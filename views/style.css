@@ -46,8 +46,9 @@ a:hover {
     padding: 8px 6px
 }
 
-#login {
+a.login {
     float: right;
+    padding: 0px 2px;
 }
 
 .subpostsuser {
