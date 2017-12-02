@@ -80,7 +80,7 @@ class PostController extends PostModel
             echo 'not a image';
             return false;
         }
-        if ($image["size"] > 500000) {
+        if ($image["size"] > 5000000) {
             echo 'too large';
             return false;
         }
