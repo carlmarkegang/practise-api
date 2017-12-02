@@ -87,7 +87,7 @@ class PostController extends PostModel
             echo 'too large';
             return false;
         }
-        if (!in_array($imagePath, array("jpg", "png", "jpeg", "gif"))) {
+        if (!in_array(strtolower($imagePath), array("jpg", "png", "jpeg", "gif"))) {
             echo 'weird file ending';
             return false;
         }
