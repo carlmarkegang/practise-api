@@ -5,6 +5,8 @@ class UserController extends UserModel
 
     function login($username, $password)
     {
+        $username = $this->makeSafe($username);
+        $password = $this->makeSafe($password);
         if ($userToken = $this->authenticateUser($username, $password)) {
             if ($newToken = $this->updateUserToken($userToken)) {
                 setcookie('usertoken', $newToken, time() + (86400), "/");
@@ -37,6 +39,8 @@ class UserController extends UserModel
     function createUser($username, $password)
     {
         $db = new db();
+        $username = $this->makeSafe($username);
+        $password = $this->makeSafe($password);
         $hash = $this->getNewHash($password);
         $newToken = $this->getNewHash();
         if (!$this->userExists($username)) {
@@ -61,6 +65,10 @@ class UserController extends UserModel
         }
         return password_hash($input, PASSWORD_DEFAULT);
 
+    }
+
+    function makeSafe($input){
+        return htmlspecialchars($input, ENT_QUOTES);
     }
 
 }

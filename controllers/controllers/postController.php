@@ -5,8 +5,10 @@ class PostController extends PostModel
 
     function createPost($text, $token, $parent = '', $image = null)
     {
-        $imageInsert = '';
         $db = new db();
+        $text = $this->makeSafe($text);
+        $parent = $this->makeSafe($parent);
+        $imageInsert = '';
         $date = date("d-m-Y H:i:s");
         $user = new UserModel();
         $userDetails = $user->getUserDetails($token);
@@ -31,11 +33,10 @@ class PostController extends PostModel
                 if ($image)
                     $this->addImage($image, $db->insert_id, $imageInsert);
 
-                if (isset($parent)) {
+                if (isset($parent))
                     return $parent;
-                } else {
-                    return $db->insert_id;
-                }
+                else
+                    return false;
             }
             echo 'you cannot make a empty post';
         }
@@ -60,6 +61,8 @@ class PostController extends PostModel
     function editPost($token, $id, $parent, $text)
     {
         $db = new db();
+        $text = $this->makeSafe($text);
+        $parent = $this->makeSafe($parent);
         $user = new UserModel();
         if ($userdetails = $user->getUserDetails($token)) {
             $userid = $userdetails['id'];
@@ -112,6 +115,10 @@ class PostController extends PostModel
                 throw new Exception("Could not put contents.");
             }
             return true;
+    }
+
+    function makeSafe($input){
+        return htmlspecialchars($input, ENT_QUOTES);
     }
 
 }

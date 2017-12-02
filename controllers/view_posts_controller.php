@@ -32,7 +32,7 @@ class viewpostsController
         if ($return = $PostController->createPost($_POST['text'], $userDetails['token'], $_GET["id"], $_FILES["image"]))
             header('Location: index.php?controller=posts&action=show&id=' . $return);
         else
-            return call('pages', 'error');
+            header('Location: index.php?controller=posts&action=index');
     }
 
     public function deletepost()
