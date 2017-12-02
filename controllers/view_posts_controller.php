@@ -29,7 +29,10 @@ class viewpostsController
         $user = new UserModel();
         $PostController = new PostController();
         $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
-        $PostController->createPost($_POST['text'], $userDetails['token'], $_GET["id"]);
+        if ($return = $PostController->createPost($_POST['text'], $userDetails['token'], $_GET["id"], $_FILES["image"]))
+            header('Location: index.php?controller=posts&action=show&id=' . $return);
+        else
+            return call('pages', 'error');
     }
 
     public function deletepost()

@@ -6,7 +6,7 @@ class PostModel
     function getPosts($type, $parent = null, $limit = 100, $id = null)
     {
         $db = new db();
-        $query = "SELECT id,text,user_id,created FROM posts where deleted != 1 ";
+        $query = "SELECT * FROM posts where deleted != 1 ";
         if ($type == "main") {
             $query .= "and type='main' limit $limit";
         } else if ($type == "sub") {

@@ -3,8 +3,9 @@
 class PostController extends PostModel
 {
 
-    function createPost($text, $token, $parent = '')
+    function createPost($text, $token, $parent = '', $image = null)
     {
+        $imageInsert = '';
         $db = new db();
         $date = date("d-m-Y H:i:s");
         $user = new UserModel();
@@ -14,17 +15,31 @@ class PostController extends PostModel
         } else {
             $type = 'sub';
         }
-        if ($text != '') {
-            $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`, `deleted`) VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "', 0)";
-            if ($db->query($insert) === true) {
-                if (isset($parent)) {
-                    header('Location: index.php?controller=posts&action=show&id=' . $parent);
-                } else {
-                    header('Location: index.php?controller=posts&action=index');
-                }
+
+        if (isset($image)) {
+            if (!$imageInsert = $this->checkImage($image)) {
+                echo $imageInsert;
+                return;
             }
         }
-        $db->close();
+
+        if ($text != '') {
+            $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`, `deleted`, `contains_img`) 
+            VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "', 0, '$imageInsert')";
+
+            if ($db->query($insert) === true) {
+                if ($image)
+                    $this->addImage($image, $db->insert_id, $imageInsert);
+
+                if (isset($parent)) {
+                    return $parent;
+                } else {
+                    return $db->insert_id;
+                }
+            }
+            echo 'you cannot make a empty post';
+        }
+        return false;
     }
 
     function deletePost($token, $id, $parent)
@@ -54,6 +69,36 @@ class PostController extends PostModel
                 exit;
             }
 
+        }
+    }
+
+    function checkImage($image)
+    {
+        $imagePath = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        if (!$check = getimagesize($image["tmp_name"])) {
+            echo 'not a image';
+            return false;
+        }
+        if ($image["size"] > 500000) {
+            echo 'too large';
+            return false;
+        }
+        if (!in_array($imagePath, array("jpg", "png", "jpeg", "gif"))) {
+            echo 'weird file ending';
+            return false;
+        }
+        return $imagePath;
+    }
+
+    function addImage($image, $imageId, $imageFileType)
+    {
+        $target_file = "views/images/" . $imageId . '.' . $imageFileType;
+        if (file_exists($target_file)) {
+            return 'Exists';
+        }
+        if (move_uploaded_file($image["tmp_name"], $target_file)) {
+            return true;
         }
     }
 

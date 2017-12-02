@@ -13,16 +13,16 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 ?>
 </div>
 <div class='alignleft'>
-<h3>Svar</h3>
+    <h3>Svar</h3>
 
-<?php
-foreach ($subPosts as $subPostsKey => $subPostsValue) {
+    <?php
+    foreach ($subPosts as $subPostsKey => $subPostsValue) {
 
-    $mainPost = $posts->getPosts('id', null, null, $subPostsValue['parent']);
-    echo "<div class='subposts'><a href='index.php?controller=posts&action=show&id=" . $subPostsValue['parent'] . "'>" . $mainPost[0]['text'] . "</a> " .
-        "<span class='created'>" . $mainPostsValue['created'] . "</span><br>";
-    echo nl2br($subPostsValue['text']) . "</div>";
+        $mainPost = $posts->getPosts('id', null, null, $subPostsValue['parent']);
+        echo "<div class='subposts'><a href='index.php?controller=posts&action=show&id=" . $subPostsValue['parent'] . "'>" . $mainPost[0]['text'] . "</a> " .
+            "<span class='created'>" . $mainPostsValue['created'] . "</span><br>";
+        echo nl2br($subPostsValue['text']) . "</div>";
 
-}
-?>
+    }
+    ?>
 </div>
