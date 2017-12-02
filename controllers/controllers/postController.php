@@ -16,7 +16,7 @@ class PostController extends PostModel
             $type = 'sub';
         }
 
-        if (isset($image)) {
+        if ($image['size'] != 0) {
             if (!$imageInsert = $this->checkImage($image)) {
                 echo $imageInsert;
                 return;
