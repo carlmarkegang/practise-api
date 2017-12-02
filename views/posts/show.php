@@ -24,7 +24,7 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
             <div class='subpostscontentwrap'>";
 
         if ($subPostsValue['contains_img'])
-            echo "<span class='subpostsimg'><a href='views/images/" . $subPostsValue['id'] . "." . $subPostsValue['contains_img'] . "' target='_blank'><img src='views/images/" . $subPostsValue['id'] . "." . $subPostsValue['contains_img'] . "'></span><a></span>";
+            echo "<span class='subpostsimg'><a href='views/images/" . $subPostsValue['id'] . "." . $subPostsValue['contains_img'] . "' target='_blank'><img src='views/images/" . $subPostsValue['id'] . "_thumb." . $subPostsValue['contains_img'] . "'></span></a></span>";
 
         echo "<div class='subpoststext'>" . nl2br($subPostsValue['text']) . "</div>
             </div>";

@@ -98,9 +98,20 @@ class PostController extends PostModel
             return 'Exists';
         }
         if (move_uploaded_file($image["tmp_name"], $target_file)) {
+            $this->generateThumbnail($target_file, $imageId, $imageFileType);
             return true;
         }
     }
 
+    function generateThumbnail($target_file, $imageId, $imageFileType)
+    {
+            $imagick = new Imagick(realpath($target_file));
+            $target_file_thumb = "views/images/" . $imageId . '_thumb.' . $imageFileType;
+            $imagick->thumbnailImage(150, 0, false, false);
+            if (file_put_contents($target_file_thumb, $imagick) === false) {
+                throw new Exception("Could not put contents.");
+            }
+            return true;
+    }
 
 }
