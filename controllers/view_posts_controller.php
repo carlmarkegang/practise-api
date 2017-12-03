@@ -29,10 +29,13 @@ class viewpostsController
         $user = new UserModel();
         $PostController = new PostController();
         $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
-        if ($return = $PostController->createPost($_POST['text'], $userDetails['token'], $_GET["id"], $_FILES["image"]))
+        $return = $PostController->createPost($_POST['text'], $userDetails['token'], $_GET["id"], $_FILES["image"]);
+        if ($return > 0)
             header('Location: index.php?controller=posts&action=show&id=' . $return);
-        else
+        else if ($return < 0)
             header('Location: index.php?controller=posts&action=index');
+        else
+            echo $return;
     }
 
     public function deletepost()
@@ -40,7 +43,8 @@ class viewpostsController
         $user = new UserModel();
         $PostController = new PostController();
         if ($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
-            $PostController->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
+            $postId = $PostController->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
+        header('Location: index.php?controller=posts&action=show&id=' . $postId);
     }
 
     public function editpost()
@@ -48,7 +52,8 @@ class viewpostsController
         $user = new UserModel();
         $PostController = new PostController();
         if ($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
-            $PostController->editPost($userDetails['token'], $_GET["id"], $_GET["parent"], $_POST['text']);
+            $postId = $PostController->editPost($userDetails['token'], $_GET["id"], $_GET["parent"], $_POST['text']);
+        header('Location: index.php?controller=posts&action=show&id=' . $postId);
     }
 }
 

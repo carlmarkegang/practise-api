@@ -29,11 +29,10 @@ class UserController extends UserModel
         $db = new db();
         $newToken = $this->getNewHash();
         $update = "UPDATE users set token = '$newToken' where token='$token'";
-        if ($db->query($update) === TRUE) {
+        if ($db->query($update) === TRUE)
             return $newToken;
-        } else {
+        else
             return false;
-        }
     }
 
     function createUser($username, $password)
@@ -45,16 +44,11 @@ class UserController extends UserModel
         $newToken = $this->getNewHash();
         if (!$this->userExists($username)) {
             $insert = "INSERT INTO `users` (`id`, `username`, `password`, `token`) VALUES (NULL, '$username', '$hash', '$newToken')";
-            if ($db->query($insert) === true) {
+            if ($db->query($insert) === true)
                 return true;
-            }
+
         }
         echo 'User already exist';
-    }
-
-    function changeUserPass($username, $password)
-    {
-
     }
 
     function getNewHash($input = null)
@@ -69,6 +63,11 @@ class UserController extends UserModel
 
     function makeSafe($input){
         return htmlspecialchars($input, ENT_QUOTES);
+    }
+
+    function changeUserPass($username, $password)
+    {
+
     }
 
 }

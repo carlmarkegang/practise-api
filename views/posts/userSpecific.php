@@ -4,6 +4,8 @@ echo '<form action="index.php?controller=posts&action=editpost&parent=' . $mainP
 <input type="submit"> <span class="subpostcanceledit" onclick="cancelEditPost(this)">Cancel</span>
 </form>';
 
-echo "<div class='subpostsedit'><a onclick='deletePost(" . $mainPostsValue['id'] . "," . $subPostsValue['id'] . ")' href='#'>delete</a>
-<a onclick='editPost(this)' href='#'>edit</a></div>";
+echo "<div class='subpostsedit'>
+<span onclick='deletePost(" . $mainPostsValue['id'] . "," . $subPostsValue['id'] . ")' href='#'>delete</span>
+<span onclick='editPost(this)' href='#'>edit</span>
+</div>";
 ?>

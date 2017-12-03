@@ -40,18 +40,6 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
 }
 ?>
-
-<style>
-    .subpostsimg img {
-        width: 150px;
-        float: left;
-        padding: 0 5px 5px 0;
-    }
-
-    .subpostscontentwrap {
-        display: flex;
-    }
-</style>
 <script src="views/posts/post.js"></script>
 
 

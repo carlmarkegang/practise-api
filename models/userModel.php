@@ -36,9 +36,8 @@ class UserModel
         $db = new db();
         $query = "SELECT * FROM users where username='$username'";
         if ($result = $db->query($query)) {
-            if ($result->num_rows > 0) {
+            if ($result->num_rows > 0)
                 return true;
-            }
             return false;
         }
     }

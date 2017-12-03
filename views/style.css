@@ -64,6 +64,15 @@ a.login {
     font-size: 12px;
 }
 
+.subpostsedit span {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.subpostsedit span:hover {
+    color:#909090;
+}
+
 .mainpostsuser {
     color: #6d6d6d;
 }
@@ -121,4 +130,15 @@ form {
 .created {
     font-size: 13px;
     color: #525252;
+}
+
+.subpostsimg img {
+    width: 150px;
+    float: left;
+    padding: 0 5px 5px 0;
+    max-height: 250px;
+}
+
+.subpostscontentwrap {
+    display: flex;
 }
