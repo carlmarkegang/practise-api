@@ -12,11 +12,7 @@ class PostController extends PostModel
         $date = date("d-m-Y H:i:s");
         $user = new UserModel();
         $userDetails = $user->getUserDetails($token);
-        if ($parent == '') {
-            $type = 'main';
-        } else {
-            $type = 'sub';
-        }
+        $type = $parent == '' ? 'main' : 'sub';
 
         if ($image['size'] != 0) {
             if (!$imageInsert = $this->checkImage($image)) {
@@ -33,10 +29,7 @@ class PostController extends PostModel
                 if ($image)
                     $this->addImage($image, $db->insert_id, $imageInsert);
 
-                if (isset($parent))
-                    return $parent;
-                else
-                    return false;
+                return isset($parent) ? $parent : false;
             }
             echo 'you cannot make a empty post';
         }
