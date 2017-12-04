@@ -61,7 +61,8 @@ class UserController extends UserModel
 
     }
 
-    function makeSafe($input){
+    function makeSafe($input)
+    {
         return htmlspecialchars($input, ENT_QUOTES);
     }
 

@@ -13,3 +13,12 @@ function cancelEditPost(element) {
     element.parentElement.parentElement.getElementsByClassName("subpoststext")[0].style.display = "block";
     element.parentElement.parentElement.getElementsByClassName("subpostsedittext")[0].style.display = "none";
 }
+
+function checkTextInput(element) {
+
+    if (document.getElementById("text").value == "") {
+        document.getElementById("plzwritediv").style.display = "block";
+        return false;
+    }
+    return true;
+}
