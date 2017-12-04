@@ -23,7 +23,7 @@ function checkTextInput(element) {
     return true;
 }
 
-function loadMorePosts(int) {
+function loadMorePosts(parent,offset,offsetStatic) {
     if (window.XMLHttpRequest) {
         xmlhttp=new XMLHttpRequest();
     } else {
@@ -34,10 +34,11 @@ function loadMorePosts(int) {
             if(this.responseText == ""){
                 document.getElementById("loadmoreposts").style.display = "none";
             }
+            offset+=offsetStatic;
             document.getElementById("mainpostswrap").innerHTML+=this.responseText;
-            document.getElementById("loadmoreposts").setAttribute("onclick", "loadMorePosts("+ int*2 +")");
+            document.getElementById("loadmoreposts").setAttribute("onclick", "loadMorePosts(" + parent + ","+ offset + ","+ offsetStatic +")");
         }
     }
-    xmlhttp.open("GET","views/posts/include/loadPost.php?offset="+int,true);
+    xmlhttp.open("GET","views/posts/include/loadPost.php?parent="+ parent +"&offset="+offset +"&offsetstatic="+offsetStatic,true);
     xmlhttp.send();
 }

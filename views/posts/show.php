@@ -28,7 +28,7 @@ $user->getUsernameWithId($mainPostsValue['user_id']) . "</a> - " . $posts->time_
 </div>
 <?php
     if($posts->getSubPostAmount($mainPostsValue['id']) > $postLimit)
-        echo '<span id="loadmoreposts" onclick="loadMorePosts(' . $postLimit . ')">Load more</span>';
+        echo '<span id="loadmoreposts" onclick="loadMorePosts('. $mainPostsValue['id'] . "," . $postLimit . "," . $postLimit . ')">Load more</span>';
 ?>
 </div>
 <script src="views/posts/post.js"></script>
