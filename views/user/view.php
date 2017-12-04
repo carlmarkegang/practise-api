@@ -5,7 +5,7 @@ echo "<h2>" . $username . "</h2>
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
     echo "<div><div class='mainposts'><a href='index.php?controller=posts&action=show&id=" . $mainPostsValue['id'] . "'>" . $mainPostsValue['text'] . "</a> " .
-        "<span class='created'>" . $mainPostsValue['created'] . "</span>";
+        "<span class='created'>" . $posts->time_elapsed_string($mainPostsValue['converted_time']) . "</span>";
     echo "</div></div>";
 
 }
@@ -20,7 +20,7 @@ foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
         $mainPost = $posts->getPosts('id', null, null, $subPostsValue['parent']);
         echo "<div class='subposts'><a href='index.php?controller=posts&action=show&id=" . $subPostsValue['parent'] . "'>" . $mainPost[0]['text'] . "</a> " .
-            "<span class='created'>" . $mainPostsValue['created'] . "</span><br>";
+            "<span class='created'>" . $posts->time_elapsed_string($mainPostsValue['converted_time']) . "</span><br>";
         echo nl2br($subPostsValue['text']) . "</div>";
 
     }

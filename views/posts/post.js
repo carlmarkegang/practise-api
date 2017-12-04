@@ -22,3 +22,22 @@ function checkTextInput(element) {
     }
     return true;
 }
+
+function loadMorePosts(int) {
+    if (window.XMLHttpRequest) {
+        xmlhttp=new XMLHttpRequest();
+    } else {
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+        if (this.readyState==4 && this.status==200) {
+            if(this.responseText == ""){
+                document.getElementById("loadmoreposts").style.display = "none";
+            }
+            document.getElementById("mainpostswrap").innerHTML+=this.responseText;
+            document.getElementById("loadmoreposts").setAttribute("onclick", "loadMorePosts("+ int*2 +")");
+        }
+    }
+    xmlhttp.open("GET","views/posts/include/loadPost.php?offset="+int,true);
+    xmlhttp.send();
+}

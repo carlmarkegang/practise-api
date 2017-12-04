@@ -12,9 +12,9 @@ function call($controller, $action)
 }
 
 $controllers = array(
-    'pages' => ['home', 'error'],
-    'posts' => ['index', 'show', 'createpost', 'deletepost', 'editpost'],
-    'user' => ['index', 'logout', 'createuser', 'view']
+    'pages' =>  ['home', 'error'],
+    'posts' =>  ['index', 'show', 'createpost', 'deletepost', 'editpost'],
+    'user'  =>  ['index', 'logout', 'createuser', 'view']
 );
 
 if (array_key_exists($controller, $controllers)) {

@@ -37,7 +37,6 @@ class viewuserController
     {
         $userController = new UserController();
         $userController->logout();
-        require_once('views/user/logout.php');
         header('Location: index.php');
 
     }

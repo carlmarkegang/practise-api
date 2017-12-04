@@ -10,7 +10,7 @@ class PostController extends PostModel
         $text = $this->makeSafe($text);
         $parent = $this->makeSafe($parent);
         $imageInsert = '';
-        $date = date("d-m-Y H:i:s");
+        $date = time();
         $userDetails = $user->getUserDetails($token);
         $type = $parent == '' ? 'main' : 'sub';
 
@@ -106,5 +106,6 @@ class PostController extends PostModel
     {
         return htmlspecialchars($input, ENT_QUOTES);
     }
+
 
 }
