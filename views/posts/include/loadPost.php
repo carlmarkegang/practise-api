@@ -6,6 +6,7 @@ include_once("/var/www/forum/config.php");
 $db = new db();
 $posts = new PostModel();
 $user = new UserModel();
+$userDetails = $user->getUserDetails($_COOKIE['usertoken']);
 
 $subPosts = $posts->getPosts('sub', $_GET['parent'],$_GET['offsetstatic'], null, $_GET['offset']);
 
