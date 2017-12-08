@@ -6,17 +6,19 @@ class PostModel
     function getPosts($type, $parent = null, $limit = 100, $id = null, $offset = false)
     {
         $db = new db();
-        $query = "SELECT posts.*,SUBSTRING(from_unixtime(created), 1, 19) as converted_time FROM posts where deleted != 1 ";
+        $query = "SELECT posts.*,SUBSTRING(from_unixtime(created), 1, 19) as converted_time FROM posts WHERE deleted != 1 ";
         if ($type == "main") {
-            $query .= "and type='main' limit $limit";
+            $query .= "AND type='main'";
         } else if ($type == "sub") {
-            $query .= "and type='sub' and parent='$parent' order by id asc limit $limit";
+            $query .= "AND type='sub' AND parent='$parent'";
         } else if ($type == "id") {
-            $query .= "and type='main' and id = $id";
+            $query .= "AND type='main' AND id = $id";
         }
 
+        $query .= " ORDER BY created ASC limit " . $limit;
+
         if($offset)
-            $query .= " offset $offset";
+            $query .= " OFFSET $offset";
 
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
@@ -58,6 +60,16 @@ class PostModel
                 $results_array[] = $row;
             }
             return $results_array;
+        }
+    }
+
+    function getParentIdFromSub($id = null)
+    {
+        $db = new db();
+        $query = "SELECT parent FROM posts where id='$id'";
+        if ($result = $db->query($query)) {
+            $data = $result->fetch_row();
+            return $data[0];
         }
     }
 

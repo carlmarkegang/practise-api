@@ -1,6 +1,6 @@
-function deletePost(mainpost, subpost) {
+function deletePost(subpost) {
     if (confirm("Are you sure you want to delete this post?") == true) {
-        window.location.replace('index.php?controller=posts&action=deletepost&parent=' + mainpost + '&id=' + subpost);
+        window.location.replace('index.php?controller=posts&action=deletepost&id=' + subpost);
     }
 }
 
@@ -39,6 +39,7 @@ function loadMorePosts(parent,offset,offsetStatic) {
             document.getElementById("loadmoreposts").setAttribute("onclick", "loadMorePosts(" + parent + ","+ offset + ","+ offsetStatic +")");
         }
     }
-    xmlhttp.open("GET","views/posts/include/loadPost.php?parent="+ parent +"&offset="+offset +"&offsetstatic="+offsetStatic,true);
+
+    xmlhttp.open("GET","index.php?controller=posts&action=loadpost&parent="+ parent +"&offset="+offset +"&offsetstatic="+offsetStatic,true);
     xmlhttp.send();
 }

@@ -10,14 +10,13 @@ if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
 <div class='mainposts'>
 <div id='mainpostswrap'>
 <?php
-$postLimit = 5;
 foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
 
 echo "<div class='subpostsDescription'><a href='?controller=user&action=view&id=" . $mainPostsValue['user_id'] . "'>" .
 $user->getUsernameWithId($mainPostsValue['user_id']) . "</a> - " . $posts->time_elapsed_string($subPostsValue['converted_time']) .
 "</div>" . $mainPostsValue['text'];
 
-    $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], $postLimit);
+    $subPosts = $posts->getPosts('sub', $mainPostsValue['id'], $GLOBALS['postLimit']);
 
     foreach ($subPosts as $subPostsKey => $subPostsValue) {
         include("include/includeSubpost.php");
@@ -27,8 +26,8 @@ $user->getUsernameWithId($mainPostsValue['user_id']) . "</a> - " . $posts->time_
 ?>
 </div>
 <?php
-    if($posts->getSubPostAmount($mainPostsValue['id']) > $postLimit)
-        echo '<span id="loadmoreposts" onclick="loadMorePosts('. $mainPostsValue['id'] . "," . $postLimit . "," . $postLimit . ')">Load more</span>';
+    if($posts->getSubPostAmount($mainPostsValue['id']) > $GLOBALS['postLimit'])
+        echo '<span id="loadmoreposts" onclick="loadMorePosts('. $mainPostsValue['id'] . "," . $GLOBALS['postLimit'] . "," . $GLOBALS['postLimit'] . ')">Load more</span>';
 ?>
 </div>
 <script src="views/posts/post.js"></script>

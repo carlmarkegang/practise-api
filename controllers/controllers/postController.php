@@ -28,34 +28,37 @@ class PostController extends PostModel
             if ($image)
                 $this->addImage($image, $db->insert_id, $imageInsert);
 
-            return isset($parent) ? $parent : -1;
+            return isset($parent) ? $parent : '';
         }
     }
 
-    function deletePost($token, $id, $parent)
+    function deletePost($token, $id)
     {
         $db = new db();
         $user = new UserModel();
+        $post = new PostModel();
         if ($userdetails = $user->getUserDetails($token)) {
             $userid = $userdetails['id'];
+            $parent_id = $post->getParentIdFromSub($id);
             $update = "UPDATE posts set deleted = '1' where id='$id' and user_id = '$userid'";
             if ($db->query($update) === TRUE)
-                return $parent;
+                return $parent_id;
 
         }
     }
 
-    function editPost($token, $id, $parent, $text)
+    function editPost($token, $id, $text)
     {
         $db = new db();
         $user = new UserModel();
+        $post = new PostModel();
         $text = $this->makeSafe($text);
-        $parent = $this->makeSafe($parent);
         if ($userdetails = $user->getUserDetails($token)) {
             $userid = $userdetails['id'];
+            $parent_id = $post->getParentIdFromSub($id);
             $update = "UPDATE posts set text = '" . $text . "' where id='$id' and user_id = '$userid'";
             if ($db->query($update) === TRUE)
-                return $parent;
+                return $parent_id;
 
         }
     }

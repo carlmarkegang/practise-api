@@ -11,14 +11,8 @@ function call($controller, $action)
 
 }
 
-$controllers = array(
-    'pages' =>  ['home', 'error'],
-    'posts' =>  ['index', 'show', 'createpost', 'deletepost', 'editpost'],
-    'user'  =>  ['index', 'logout', 'createuser', 'view']
-);
-
-if (array_key_exists($controller, $controllers)) {
-    if (in_array($action, $controllers[$controller])) {
+if (array_key_exists($controller, $controllerPages)) {
+    if (in_array($action, $controllerPages[$controller])) {
         call($controller, $action);
     } else {
         call('pages', 'error');

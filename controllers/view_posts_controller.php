@@ -20,7 +20,7 @@ class viewpostsController
         if (!isset($_GET['id']))
             return call('pages', 'error');
 
-        $mainPosts = $posts->getPosts('id', null, null, $_GET["id"]);
+        $mainPosts = $posts->getPosts('id', null, $GLOBALS['postLimit'], $_GET["id"]);
         require_once('views/posts/show.php');
     }
 
@@ -32,10 +32,10 @@ class viewpostsController
         $return = $PostController->createPost($_POST['text'], $userDetails['token'], $_GET["id"], $_FILES["image"]);
         if ($return > 0)
             header('Location: index.php?controller=posts&action=show&id=' . $return);
-        else if ($return < 0)
-            header('Location: index.php?controller=posts&action=index');
         else
-            echo $return;
+            header('Location: index.php?controller=posts&action=index');
+
+        var_dump($return);
     }
 
     public function deletepost()
@@ -43,7 +43,7 @@ class viewpostsController
         $user = new UserModel();
         $PostController = new PostController();
         if ($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
-            $postId = $PostController->deletePost($userDetails['token'], $_GET["id"], $_GET["parent"]);
+            $postId = $PostController->deletePost($userDetails['token'], $_GET["id"]);
         header('Location: index.php?controller=posts&action=show&id=' . $postId);
     }
 
@@ -52,9 +52,25 @@ class viewpostsController
         $user = new UserModel();
         $PostController = new PostController();
         if ($userDetails = $user->getUserDetails($_COOKIE['usertoken']))
-            $postId = $PostController->editPost($userDetails['token'], $_GET["id"], $_GET["parent"], $_POST['text']);
+            $postId = $PostController->editPost($userDetails['token'], $_GET["id"], $_POST['text']);
         header('Location: index.php?controller=posts&action=show&id=' . $postId);
     }
+
+    public function loadpost()
+    {
+        $db = new db();
+        $posts = new PostModel();
+        $user = new UserModel();
+        $userDetails = $user->getUserDetails($_COOKIE['usertoken']);
+
+        $subPosts = $posts->getPosts('sub', $_GET['parent'], $_GET['offsetstatic'], null, $_GET['offset']);
+
+        foreach ($subPosts as $subPostsKey => $subPostsValue) {
+            include("views/posts/include/includeSubpost.php");
+        }
+
+    }
+
 }
 
 ?>
