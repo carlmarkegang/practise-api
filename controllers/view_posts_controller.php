@@ -35,7 +35,6 @@ class viewpostsController
         else
             header('Location: index.php?controller=posts&action=index');
 
-        var_dump($return);
     }
 
     public function deletepost()

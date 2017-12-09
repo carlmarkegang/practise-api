@@ -1,6 +1,5 @@
 <p>Login:</p>
 
-
 <form action="?controller=user&action=index" method="post">
     Username:<br>
     <input type="text" name="user"><br>

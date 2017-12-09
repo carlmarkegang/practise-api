@@ -1,5 +1,4 @@
 <?php
-
 echo "<div class='subposts'><div class='subpostsuser'>" .
     "<a href='?controller=user&action=view&id=" . $subPostsValue['user_id'] . "'>" .
     $user->getUsernameWithId($subPostsValue['user_id']) .

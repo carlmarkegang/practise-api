@@ -23,7 +23,7 @@ function checkTextInput(element) {
     return true;
 }
 
-function loadMorePosts(parent,offset,offsetStatic) {
+function loadPosts(parent,offset,offsetStatic) {
     if (window.XMLHttpRequest) {
         xmlhttp=new XMLHttpRequest();
     } else {
@@ -36,7 +36,7 @@ function loadMorePosts(parent,offset,offsetStatic) {
             }
             offset+=offsetStatic;
             document.getElementById("mainpostswrap").innerHTML+=this.responseText;
-            document.getElementById("loadmoreposts").setAttribute("onclick", "loadMorePosts(" + parent + ","+ offset + ","+ offsetStatic +")");
+            document.getElementById("loadmoreposts").setAttribute("onclick", "loadPosts(" + parent + ","+ offset + ","+ offsetStatic +")");
         }
     }
 

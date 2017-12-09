@@ -1,5 +1,5 @@
 <?php
-if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '') {
+if ($GLOBALS['userDetails']) {
     echo '<form action="index.php?controller=posts&action=createpost" method="post">
     <textarea name="text" id="text" rows="5" cols="40"></textarea><br>
     <input type="submit">
