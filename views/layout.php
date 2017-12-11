@@ -20,4 +20,4 @@
     <?php require_once('routes.php'); ?>
 </div>
 </body>
-<html>
+</html>

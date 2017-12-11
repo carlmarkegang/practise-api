@@ -1,7 +1,5 @@
 <?php
 
-require_once('require.php');
-
 class viewuserController
 {
     public function index()

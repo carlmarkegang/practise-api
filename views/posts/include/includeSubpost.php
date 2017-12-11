@@ -6,12 +6,12 @@ echo "<div class='subposts'><div class='subpostsuser'>" .
     "</div><div class='subpostscontentwrap'>";
 
 if ($subPostsValue['contains_img'])
-    include("/var/www/forum//views/posts/include/includeImage.php");
+    include("includeImage.php");
 
 echo "<div class='subpoststext'>" . nl2br($subPostsValue['text']) . "</div></div>";
 
 if ($subPostsValue['user_id'] == $userDetails['id'])
-    include("/var/www/forum//views/posts/include/includeUserMenuBar.php");
+    include("includeUserMenuBar.php");
 
 echo "</div>";
 ?>

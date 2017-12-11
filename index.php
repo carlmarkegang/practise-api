@@ -1,6 +1,5 @@
 <?php
-require_once('models/userModel.php');
-require_once('config.php');
+require_once('controllers/require.php');
 
 $user = new UserModel();
 if (isset($_COOKIE['usertoken']) && $_COOKIE['usertoken'] != '')
