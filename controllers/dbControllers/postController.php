@@ -22,8 +22,8 @@ class PostController extends PostModel
         if ($text == '')
             return 'cannot make a empty post';
 
-        $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `user_id`, `deleted`, `contains_img`) 
-        VALUES (NULL, '$text', '$type', '$parent', '$date', '" . $userDetails['id'] . "', 0, '$imageInsert')";
+        $insert = "INSERT INTO `posts` (`id`, `text`, `type`, `parent`, `created`, `updated`, `user_id`, `deleted`, `contains_img`) 
+        VALUES (NULL, '$text', '$type', '$parent', '$date', '', '" . $userDetails['id'] . "', 0, '$imageInsert')";
         if ($db->query($insert) === true) {
             if ($image)
                 $this->addImage($image, $db->insert_id, $imageInsert);
@@ -53,10 +53,11 @@ class PostController extends PostModel
         $user = new UserModel();
         $post = new PostModel();
         $text = $this->makeSafe($text);
+        $date = time();
         if ($userdetails = $user->getUserDetails($token)) {
             $userid = $userdetails['id'];
             $parent_id = $post->getParentIdFromSub($id);
-            $update = "UPDATE posts set text = '" . $text . "' where id='$id' and user_id = '$userid'";
+            $update = "UPDATE posts set text = '" . $text . "', updated = '" . $date . "' where id='$id' and user_id = '$userid'";
             if ($db->query($update) === TRUE)
                 return $parent_id;
 

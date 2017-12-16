@@ -6,7 +6,7 @@ class PostModel
     function getPosts($type, $parent = null, $limit = 100, $id = null, $offset = false)
     {
         $db = new db();
-        $query = "SELECT posts.*,SUBSTRING(from_unixtime(created), 1, 19) as converted_time FROM posts WHERE deleted != 1 ";
+        $query = "SELECT * FROM posts WHERE deleted != 1 ";
         if ($type == "main") {
             $query .= "AND type='main'";
         } else if ($type == "sub") {
@@ -17,7 +17,7 @@ class PostModel
 
         $query .= " ORDER BY created ASC limit " . $limit;
 
-        if($offset)
+        if ($offset)
             $query .= " OFFSET $offset";
 
         if ($result = $db->query($query)) {
@@ -41,7 +41,7 @@ class PostModel
     function getUserSpecificMainPosts($user = null, $limit = 100)
     {
         $db = new db();
-        $query = "SELECT id,text,user_id,created FROM posts where deleted != 1 and type='main' AND user_id='$user' order by created desc limit $limit ";
+        $query = "SELECT * FROM posts where deleted != 1 and type='main' AND user_id='$user' order by created desc limit $limit ";
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $results_array[] = $row;
@@ -54,7 +54,7 @@ class PostModel
     function getUserSpecificSubPosts($user = null, $limit = 100)
     {
         $db = new db();
-        $query = "SELECT id,text,user_id,created,parent FROM posts where deleted != 1 and type='sub' AND user_id='$user' order by created desc limit $limit";
+        $query = "SELECT * FROM posts where deleted != 1 and type='sub' AND user_id='$user' order by created desc limit $limit";
         if ($result = $db->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $results_array[] = $row;
@@ -76,7 +76,8 @@ class PostModel
     function time_elapsed_string($datetime, $full = false)
     {
         $now = new DateTime;
-        $ago = new DateTime($datetime);
+        $ago = new DateTime();
+        $ago->setTimestamp($datetime);
         $diff = $now->diff($ago);
 
         $diff->w = floor($diff->d / 7);

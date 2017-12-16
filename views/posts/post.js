@@ -23,23 +23,23 @@ function checkTextInput(element) {
     return true;
 }
 
-function loadPosts(parent,offset,offsetStatic) {
+function loadPosts(parent, offset, offsetStatic) {
     if (window.XMLHttpRequest) {
-        xmlhttp=new XMLHttpRequest();
+        xmlhttp = new XMLHttpRequest();
     } else {
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.onreadystatechange=function() {
-        if (this.readyState==4 && this.status==200) {
-            if(this.responseText == ""){
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            offset += offsetStatic;
+            if (this.responseText == "") {
                 document.getElementById("loadmoreposts").style.display = "none";
             }
-            offset+=offsetStatic;
-            document.getElementById("mainpostswrap").innerHTML+=this.responseText;
-            document.getElementById("loadmoreposts").setAttribute("onclick", "loadPosts(" + parent + ","+ offset + ","+ offsetStatic +")");
+            document.getElementById("mainpostswrap").innerHTML += this.responseText;
+            document.getElementById("loadmoreposts").setAttribute("onclick", "loadPosts(" + parent + "," + offset + "," + offsetStatic + ")");
         }
     }
 
-    xmlhttp.open("GET","index.php?controller=posts&action=loadpost&parent="+ parent +"&offset="+offset +"&offsetstatic="+offsetStatic,true);
+    xmlhttp.open("GET", "index.php?controller=posts&action=loadpost&parent=" + parent + "&offset=" + offset + "&offsetstatic=" + offsetStatic, true);
     xmlhttp.send();
 }

@@ -8,7 +8,8 @@ if ($GLOBALS['userDetails'])
         <?php
         foreach ($mainPosts as $mainPostsKey => $mainPostsValue) {
             echo "<div class='subpostsDescription'><a href='?controller=user&action=view&id=" . $mainPostsValue['user_id'] . "'>" .
-                $user->getUsernameWithId($mainPostsValue['user_id']) . "</a> - " . $posts->time_elapsed_string($mainPostsValue['converted_time']) .
+                $user->getUsernameWithId($mainPostsValue['user_id']) . "</a> - " .
+                $posts->time_elapsed_string($mainPostsValue['created']) .
                 "</div>" . $mainPostsValue['text'];
         }
         ?>

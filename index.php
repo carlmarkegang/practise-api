@@ -18,4 +18,3 @@ if (!in_array($action, $controllerPagesSkipLayout[$controller])) {
 } else {
     require_once('routes.php');
 }
-?>

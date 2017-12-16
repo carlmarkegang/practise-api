@@ -31,7 +31,8 @@ CREATE TABLE `posts` (
   `text` varchar(10000) NOT NULL,
   `type` varchar(200) NOT NULL,
   `parent` varchar(200) NOT NULL,
-  `created` varchar(100) NOT NULL,
+  `created` varchar(20) NOT NULL,
+  `updated` varchar(20) NOT NULL,
   `user_id` int(100) NOT NULL,
   `deleted` varchar(10) NOT NULL,
   `contains_img` varchar(5) NOT NULL

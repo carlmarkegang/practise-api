@@ -44,7 +44,7 @@ a:hover {
     background-color: #f9f9f9;
     box-shadow: 0px 1px 4px gainsboro;
     padding: 8px 6px;
-    margin-bottom:50px;
+    margin-bottom: 50px;
 }
 
 a.login {
@@ -58,7 +58,7 @@ a.login {
 }
 
 .subpoststext {
-    padding: 10px;
+    padding: 5px;
 }
 
 .subpostsedit {
@@ -150,11 +150,42 @@ form {
     color: #e02181;
 }
 
-#loadmoreposts{
-    font-size:14px;
-    cursor:pointer;
+#loadmoreposts {
+    font-size: 14px;
+    cursor: pointer;
 }
 
-#loadmoreposts:hover{
+#loadmoreposts:hover {
     color: #909090;
+}
+
+#changepass form {
+    display: none;
+}
+
+.subpostsedited {
+    color: #d63636;
+    font-size: 10px;
+}
+
+@media screen and (max-width: 850px) {
+    #wrap {
+        width: 100%;
+        padding: 0px;
+    }
+
+    textarea {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .subpostsimg img {
+        width: 70px;
+    }
+
+    .subpoststext {
+        padding: 2px;
+        word-wrap: break-word;
+    }
 }

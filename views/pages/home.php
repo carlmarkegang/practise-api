@@ -1,4 +1,4 @@
-<p>Home<p>
+<p>Home</p>
 
 <?php
 

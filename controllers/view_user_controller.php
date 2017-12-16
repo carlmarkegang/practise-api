@@ -36,7 +36,6 @@ class viewuserController
         $userController = new UserController();
         $userController->logout();
         header('Location: index.php');
-
     }
 
     public function view()
@@ -51,6 +50,16 @@ class viewuserController
         require_once('views/user/view.php');
     }
 
-}
+    public function changepass()
+    {
+        if (isset($GLOBALS['userDetails']['username']) && isset($_POST['pass']) && isset($_POST['newpass'])) {
+            $userController = new UserController();
+            if (!$userController->changeUserPass($GLOBALS['userDetails']['username'], $_POST['pass'], $_POST['newpass'])) {
+                echo '<br>Error<br>';
+            } else {
+                header('Location: index.php');
+            }
+        }
+    }
 
-?>
+}

@@ -20,4 +20,3 @@ if (array_key_exists($controller, $controllerPages)) {
 } else {
     call('pages', 'error');
 }
-?>

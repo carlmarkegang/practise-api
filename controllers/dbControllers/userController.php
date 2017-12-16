@@ -31,8 +31,8 @@ class UserController extends UserModel
         $update = "UPDATE users set token = '$newToken' where token='$token'";
         if ($db->query($update) === TRUE)
             return $newToken;
-        else
-            return false;
+
+        return false;
     }
 
     function createUser($username, $password)
@@ -66,9 +66,18 @@ class UserController extends UserModel
         return htmlspecialchars($input, ENT_QUOTES);
     }
 
-    function changeUserPass($username, $password)
+    function changeUserPass($username, $password, $newpassword)
     {
+        $db = new db();
+        $password = $this->makeSafe($password);
+        if ($token = $this->authenticateUser($username, $password)) {
+            $newpassword = $this->getNewHash($newpassword);
+            $update = "UPDATE users set password = '$newpassword' where token='$token'";
+            if ($db->query($update) === TRUE)
+                return true;
 
+            return false;
+        }
     }
 
 }

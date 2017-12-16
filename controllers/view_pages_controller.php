@@ -12,5 +12,3 @@ class viewpagesController
         require_once('views/pages/error.php');
     }
 }
-
-?>

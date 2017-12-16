@@ -1,19 +1,15 @@
 <?php
 $controllerPages = array(
-    'pages' =>  ['home', 'error'],
-    'posts' =>  ['index', 'show', 'createpost', 'deletepost', 'editpost', 'loadpost'],
-    'user'  =>  ['index', 'logout', 'createuser', 'view']
+    'pages' => ['home', 'error'],
+    'posts' => ['index', 'show', 'createpost', 'deletepost', 'editpost', 'loadpost'],
+    'user' => ['index', 'logout', 'createuser', 'view', 'changepass']
 );
 $controllerPagesSkipLayout = array(
-    'posts' =>  ['loadpost']
+    'posts' => ['loadpost']
 );
 
 $postLimit = 10;
 $userPostLimit = 5;
-
-
-
-
 
 
 class db extends Mysqli
@@ -31,8 +27,6 @@ class db extends Mysqli
         if ($this->connect_error) {
             echo $this->connect_error;
         }
-
     }
-
 }
 
